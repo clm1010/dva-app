@@ -12,7 +12,9 @@ import {
 import styles from './index.less'
 
 const { api } = config
-const { dashboard, users, userLogin, user, v1test, v2test } = api
+const {
+  dashboard, users, userLogin, user, v1test, v2test,
+} = api
 
 const requestOptions = [
   {

@@ -10,7 +10,9 @@ import styles from './List.less'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({
+  onDeleteItem, onEditItem, isMotion, location, ...tableProps
+}) => {
   location.query = queryString.parse(location.search)
 
   const handleMenuClick = (record, e) => {
@@ -33,7 +35,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'avatar',
       width: 64,
       className: styles.avatar,
-      render: text => <img alt={'avatar'} width={24} src={text} />,
+      render: text => <img alt="avatar" width={24} src={text} />,
     }, {
       title: 'Name',
       dataIndex: 'name',

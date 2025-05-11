@@ -1,7 +1,9 @@
 {
   "extends": "airbnb",
   "rules": {
+    "arrow-parens": [0, "never"],
     "arrow-body-style": [0, "never"],
+    "function-paren-newline": [0, "never"],
     "comma-dangle": [2, "always-multiline"],
     "global-require": 0,
     "func-names": 0,

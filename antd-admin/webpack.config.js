@@ -9,10 +9,15 @@ module.exports = (webpackConfig, env) => {
 
   if (production) {
     if (webpackConfig.module) {
-    // ClassnameHash
+      // ClassnameHash
       webpackConfig.module.rules.map((item) => {
-        if (String(item.test) === '/\\.less$/' || String(item.test) === '/\\.css/') {
-          item.use.filter(iitem => iitem.loader === 'css')[0].options.localIdentName = '[hash:base64:5]'
+        if (
+          String(item.test) === '/\\.less$/' ||
+          String(item.test) === '/\\.css/'
+        ) {
+          item.use.filter(
+            (iitem) => iitem.loader === 'css'
+          )[0].options.localIdentName = '[hash:base64:5]'
         }
         return item
       })
@@ -20,7 +25,7 @@ module.exports = (webpackConfig, env) => {
     webpackConfig.plugins.push(
       new webpack.LoaderOptionsPlugin({
         minimize: true,
-        debug: false,
+        debug: false
       })
     )
   }
@@ -29,18 +34,20 @@ module.exports = (webpackConfig, env) => {
     new CopyWebpackPlugin([
       {
         from: 'src/public',
-        to: production ? '../' : webpackConfig.output.outputPath,
-      },
+        to: production ? '../' : webpackConfig.output.outputPath
+      }
     ]),
     new HtmlWebpackPlugin({
       template: `${__dirname}/src/entry.ejs`,
       filename: production ? '../index.html' : 'index.html',
-      minify: production ? {
-        collapseWhitespace: true,
-      } : null,
+      minify: production
+        ? {
+            collapseWhitespace: true
+          }
+        : null,
       hash: true,
-      headScripts: production ? null : ['/roadhog.dll.js'],
-    }),
+      headScripts: production ? null : ['/roadhog.dll.js']
+    })
   ])
 
   // Alias
@@ -52,7 +59,7 @@ module.exports = (webpackConfig, env) => {
     services: `${__dirname}/src/services`,
     models: `${__dirname}/src/models`,
     routes: `${__dirname}/src/routes`,
-    themes: `${__dirname}/src/themes`,
+    themes: `${__dirname}/src/themes`
   }
 
   return webpackConfig

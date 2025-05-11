@@ -30,8 +30,8 @@ const Header = ({
           </div>
         </Popover>
         : <div
-          className={styles.button}
-          onClick={switchSider}
+            className={styles.button}
+            onClick={switchSider}
         >
           <Icon type={classnames({ 'menu-unfold': siderFold, 'menu-fold': !siderFold })} />
         </div>}
