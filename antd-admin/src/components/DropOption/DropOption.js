@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dropdown, Button, Icon, Menu } from 'antd'
+import {
+  Dropdown, Button, Icon, Menu
+} from 'antd'
 
 const DropOption = ({
   onMenuClick, menuOptions = [], buttonStyle, dropdownProps,
@@ -10,7 +12,10 @@ const DropOption = ({
     overlay={<Menu onClick={onMenuClick}>{menu}</Menu>}
     {...dropdownProps}
   >
-    <Button style={{ border: 'none', ...buttonStyle }}>
+    <Button style={{
+ border: 'none', ...buttonStyle
+}}
+    >
       <Icon style={{ marginRight: 2 }} type="bars" />
       <Icon type="down" />
     </Button>

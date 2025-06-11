@@ -9,103 +9,112 @@ const RadioGroup = Radio.Group
 const chartList = [
   {
     label: 'SimpleChart',
-    value: 'simple',
+    value: 'simple'
   },
   {
     label: 'ChartShowLoading',
-    value: 'loading',
+    value: 'loading'
   },
   {
     label: 'ChartAPI',
-    value: 'api',
+    value: 'api'
   },
   {
     label: 'ChartWithEvent',
-    value: 'events',
+    value: 'events'
   },
   {
     label: 'ThemeChart',
-    value: 'theme',
+    value: 'theme'
   },
   {
     label: 'DynamicChart',
-    value: 'dynamic',
+    value: 'dynamic'
   },
   {
     label: 'MapChart',
-    value: 'map',
+    value: 'map'
   },
   {
     label: 'AirportCoord',
-    value: 'airport',
+    value: 'airport'
   },
   {
     label: 'Graph',
-    value: 'graph',
+    value: 'graph'
   },
   {
     label: 'Calendar',
-    value: 'calendar',
+    value: 'calendar'
   },
   {
     label: 'Treemap',
-    value: 'treemap',
+    value: 'treemap'
   },
   {
     label: 'Gauge',
-    value: 'gauge',
+    value: 'gauge'
   },
   {
     label: 'GCalendar',
-    value: 'gcalendar',
+    value: 'gcalendar'
   },
   {
     label: 'LunarCalendar',
-    value: 'lunar',
+    value: 'lunar'
   },
   {
     label: 'Liquidfill',
-    value: 'liquid',
+    value: 'liquid'
   },
   {
     label: 'BubbleGradient',
-    value: 'BubbleGradientComponent',
+    value: 'BubbleGradientComponent'
   },
   {
     label: 'TransparentBar3D',
-    value: 'TransparentBar3DComPonent',
+    value: 'TransparentBar3DComPonent'
   },
   {
     label: 'MoonComponent',
-    value: 'MoonComponent',
-  },
+    value: 'MoonComponent'
+  }
 ]
 
 class Chart extends React.Component {
-  constructor () {
+  constructor() {
     super()
-    this.state = {
-      type: '',
-    }
+    this.state = { type: '' }
     this.handleRadioGroupChange = this.handleRadioGroupChange.bind(this)
   }
-  handleRadioGroupChange (e) {
-    this.setState({
-      type: e.target.value,
-    })
+  handleRadioGroupChange(e) {
+    this.setState({ type: e.target.value })
   }
-  render () {
-    return (<Page inner id="EChartsMain">
-      <RadioGroup options={chartList} defaultValue="dynamic" onChange={this.handleRadioGroupChange} />
-      <div className={styles.chart}>
-        <EchartsComponent type={this.state.type} />
-      </div>
-      <div style={{ pading: 24, marginTop: 24 }}>
-        All demos from <a href="https://github.com/hustcc/echarts-for-react">https://github.com/hustcc/echarts-for-react</a>
-      </div>
-    </Page>)
+  render() {
+    return (
+      <Page inner id='EChartsMain'>
+        <RadioGroup
+          options={chartList}
+          defaultValue='dynamic'
+          onChange={this.handleRadioGroupChange}
+        />
+        <div className={styles.chart}>
+          <EchartsComponent type={this.state.type} />
+        </div>
+        <div
+          style={{
+            pading: 24,
+            marginTop: 24
+          }}
+        >
+          All demos from{' '}
+          <a href='https://github.com/hustcc/echarts-for-react'>
+            https://github.com/hustcc/echarts-for-react
+          </a>
+        </div>
+      </Page>
+    )
   }
 }
-
 
 export default Chart

@@ -388,11 +388,9 @@ const LunarCalendarComponent = () => {
     }
 
     const option = {
-      tooltip: {
-        formatter (params) {
-          return `降雨量: ${params.value[1].toFixed(2)}`
-        },
-      },
+      tooltip: { formatter (params) {
+        return `降雨量: ${params.value[1].toFixed(2)}`
+      }, },
 
       visualMap: {
         show: false,
@@ -407,11 +405,7 @@ const LunarCalendarComponent = () => {
           color: ['#e0ffff', '#006edd'],
           opacity: 0.3,
         },
-        controller: {
-          inRange: {
-            opacity: 0.5,
-          },
-        },
+        controller: { inRange: { opacity: 0.5, }, },
       },
 
       calendar: [{
@@ -424,9 +418,7 @@ const LunarCalendarComponent = () => {
           firstDay: 1,
           nameMap: 'cn',
         },
-        monthLabel: {
-          show: false,
-        },
+        monthLabel: { show: false, },
         range: '2017-03',
       }],
 
@@ -434,36 +426,30 @@ const LunarCalendarComponent = () => {
         type: 'scatter',
         coordinateSystem: 'calendar',
         symbolSize: 1,
-        label: {
-          normal: {
-            show: true,
-            formatter (params) {
-              let d = echarts.number.parseDate(params.value[0])
-              return `${d.getDate()}\n\n${params.value[2]}\n\n`
-            },
-            textStyle: {
-              color: '#000',
-            },
+        label: { normal: {
+          show: true,
+          formatter (params) {
+            let d = echarts.number.parseDate(params.value[0])
+            return `${d.getDate()}\n\n${params.value[2]}\n\n`
           },
-        },
+          textStyle: { color: '#000', },
+        }, },
         data: lunarData,
       }, {
         type: 'scatter',
         coordinateSystem: 'calendar',
         symbolSize: 1,
-        label: {
-          normal: {
-            show: true,
-            formatter (params) {
-              return `\n\n\n${params.value[3] || ''}`
-            },
-            textStyle: {
-              fontSize: 14,
-              fontWeight: 700,
-              color: '#a00',
-            },
+        label: { normal: {
+          show: true,
+          formatter (params) {
+            return `\n\n\n${params.value[3] || ''}`
           },
-        },
+          textStyle: {
+            fontSize: 14,
+            fontWeight: 700,
+            color: '#a00',
+          },
+        }, },
         data: lunarData,
       }, {
         name: '降雨量',
@@ -481,7 +467,9 @@ const LunarCalendarComponent = () => {
         <label> render a lunar calendar chart. </label>
         <ReactEcharts
           option={getOtion()}
-          style={{ height: '500px', width: '100%' }}
+          style={{
+ height: '500px', width: '100%'
+}}
           className="react_for_echarts"
         />
       </div>

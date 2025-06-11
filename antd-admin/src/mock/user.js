@@ -4,24 +4,22 @@ const config = require('../utils/config')
 
 const { apiPrefix } = config
 
-let usersListData = Mock.mock({
-  'data|80-100': [
-    {
-      id: '@id',
-      name: '@name',
-      nickName: '@last',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
-      address: '@county(true)',
-      isMale: '@boolean',
-      email: '@email',
-      createTime: '@datetime',
-      avatar () {
-        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
-      },
+let usersListData = Mock.mock({ 'data|80-100': [
+  {
+    id: '@id',
+    name: '@name',
+    nickName: '@last',
+    phone: /^1[34578]\d{9}$/,
+    'age|11-99': 1,
+    address: '@county(true)',
+    isMale: '@boolean',
+    email: '@email',
+    createTime: '@datetime',
+    avatar () {
+      return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
     },
-  ],
-})
+  },
+], })
 
 
 let database = usersListData.data
@@ -37,12 +35,8 @@ const userPermission = {
     visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
     role: EnumRoleType.DEFAULT,
   },
-  ADMIN: {
-    role: EnumRoleType.ADMIN,
-  },
-  DEVELOPER: {
-    role: EnumRoleType.DEVELOPER,
-  },
+  ADMIN: { role: EnumRoleType.ADMIN, },
+  DEVELOPER: { role: EnumRoleType.DEVELOPER, },
 }
 
 const adminUsers = [
@@ -91,17 +85,23 @@ const NOTFOUND = {
 module.exports = {
 
   [`POST ${apiPrefix}/user/login`] (req, res) {
-    const { username, password } = req.body
+    const {
+      username, password
+    } = req.body
     const user = adminUsers.filter(item => item.username === username)
 
     if (user.length > 0 && user[0].password === password) {
       const now = new Date()
       now.setDate(now.getDate() + 1)
-      res.cookie('token', JSON.stringify({ id: user[0].id, deadline: now.getTime() }), {
+      res.cookie('token', JSON.stringify({
+        id: user[0].id, deadline: now.getTime()
+      }), {
         maxAge: 900000,
         httpOnly: true,
       })
-      res.json({ success: true, message: 'Ok' })
+      res.json({
+        success: true, message: 'Ok'
+      })
     } else {
       res.status(400).end()
     }
@@ -139,7 +139,9 @@ module.exports = {
 
   [`GET ${apiPrefix}/users`] (req, res) {
     const { query } = req
-    let { pageSize, page, ...other } = query
+    let {
+      pageSize, page, ...other
+    } = query
     pageSize = pageSize || 10
     page = page || 1
 

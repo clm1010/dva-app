@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Button, Row, Form, Input } from 'antd'
+import {
+  Button, Row, Form, Input
+} from 'antd'
 import { config } from 'utils'
 import styles from './index.less'
 
@@ -20,7 +22,9 @@ const Login = ({
       if (errors) {
         return
       }
-      dispatch({ type: 'login/login', payload: values })
+      dispatch({
+        type: 'login/login', payload: values
+      })
     })
   }
 
@@ -32,22 +36,14 @@ const Login = ({
       </div>
       <form>
         <FormItem hasFeedback>
-          {getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input onPressEnter={handleOk} placeholder="Username" />)}
+          {getFieldDecorator('username', { rules: [
+              { required: true, },
+            ], })(<Input onPressEnter={handleOk} placeholder="Username" />)}
         </FormItem>
         <FormItem hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input type="password" onPressEnter={handleOk} placeholder="Password" />)}
+          {getFieldDecorator('password', { rules: [
+              { required: true, },
+            ], })(<Input type="password" onPressEnter={handleOk} placeholder="Password" />)}
         </FormItem>
         <Row>
           <Button type="primary" onClick={handleOk} loading={loading.effects.login}>

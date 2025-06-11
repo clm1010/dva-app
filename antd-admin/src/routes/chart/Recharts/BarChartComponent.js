@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col, Card, Button } from 'antd'
+import {
+  Row, Col, Card, Button
+} from 'antd'
 import {
   BarChart,
   Bar,

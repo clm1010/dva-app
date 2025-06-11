@@ -12,8 +12,6 @@ const HighChartsComponent = ({ type }) => {
   return (<HighstockComponent />)
 }
 
-HighChartsComponent.propTypes = {
-  type: PropTypes.string,
-}
+HighChartsComponent.propTypes = { type: PropTypes.string, }
 
 export default HighChartsComponent

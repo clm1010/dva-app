@@ -181,27 +181,15 @@ const TreemapComponent = () => {
   ]
   let formatUtil = echarts.format
   function getLevelOption () {
-    return [{
-      itemStyle: {
-        normal: {
-          borderWidth: 0,
-          gapWidth: 5,
-        },
-      },
-    }, {
-      itemStyle: {
-        normal: {
-          gapWidth: 1,
-        },
-      },
-    }, {
+    return [{ itemStyle: { normal: {
+      borderWidth: 0,
+      gapWidth: 5,
+    }, }, }, { itemStyle: { normal: { gapWidth: 1, }, }, }, {
       colorSaturation: [0.35, 0.5],
-      itemStyle: {
-        normal: {
-          gapWidth: 1,
-          borderColorSaturation: 0.6,
-        },
-      },
+      itemStyle: { normal: {
+        gapWidth: 1,
+        borderColorSaturation: 0.6,
+      }, },
     }]
   }
   const option = {
@@ -210,21 +198,21 @@ const TreemapComponent = () => {
       left: 'center',
     },
 
-    tooltip: {
-      formatter (info) {
-        let { value, treePathInfo } = info
-        let treePath = []
+    tooltip: { formatter (info) {
+      let {
+        value, treePathInfo
+      } = info
+      let treePath = []
 
-        for (let i = 1; i < treePathInfo.length; i++) {
-          treePath.push(treePathInfo[i].name)
-        }
+      for (let i = 1; i < treePathInfo.length; i++) {
+        treePath.push(treePathInfo[i].name)
+      }
 
-        return [
-          `<div class="tooltip-title">${formatUtil.encodeHTML(treePath.join('/'))}</div>`,
-          `Disk Usage: ${formatUtil.addCommas(value)} KB`,
-        ].join('')
-      },
-    },
+      return [
+        `<div class="tooltip-title">${formatUtil.encodeHTML(treePath.join('/'))}</div>`,
+        `Disk Usage: ${formatUtil.addCommas(value)} KB`,
+      ].join('')
+    }, },
 
     series: [{
       name: 'Disk Usage',
@@ -234,11 +222,7 @@ const TreemapComponent = () => {
         show: true,
         formatter: '{b}',
       },
-      itemStyle: {
-        normal: {
-          borderColor: '#fff',
-        },
-      },
+      itemStyle: { normal: { borderColor: '#fff', }, },
       levels: getLevelOption(),
       data: diskData,
     }],
@@ -250,7 +234,9 @@ const TreemapComponent = () => {
         <label> render a disk usage treemap. </label>
         <ReactEcharts
           option={option}
-          style={{ height: '500px', width: '100%' }}
+          style={{
+ height: '500px', width: '100%'
+}}
           className="react_for_echarts"
         />
       </div>

@@ -12,8 +12,6 @@ const ReChartsComponent = ({ type }) => {
   return (<LineChartComponent />)
 }
 
-ReChartsComponent.propTypes = {
-  type: PropTypes.string,
-}
+ReChartsComponent.propTypes = { type: PropTypes.string, }
 
 export default ReChartsComponent

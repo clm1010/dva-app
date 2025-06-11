@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import { Input, Select, Button, Icon } from 'antd'
+import {
+  Input, Select, Button, Icon
+} from 'antd'
 import styles from './Search.less'
 
 class Search extends React.Component {
@@ -10,9 +12,7 @@ class Search extends React.Component {
     selectValue: (this.props.select && this.props.selectProps) ? this.props.selectProps.defaultValue : '',
   }
   handleSearch = () => {
-    const data = {
-      keyword: ReactDOM.findDOMNode(this.refs.searchInput).value,
-    }
+    const data = { keyword: ReactDOM.findDOMNode(this.refs.searchInput).value, }
     if (this.props.select) {
       data.field = this.state.selectValue
     }
@@ -32,9 +32,7 @@ class Search extends React.Component {
   }
   handleClearInput = () => {
     ReactDOM.findDOMNode(this.refs.searchInput).value = ''
-    this.setState({
-      clearVisible: false,
-    })
+    this.setState({ clearVisible: false, })
     this.handleSearch()
   }
   render () {

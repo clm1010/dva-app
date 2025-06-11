@@ -1,10 +1,10 @@
 import React from 'react'
 import { layer } from 'components'
-import { Table, Row, Col, Button, Card } from 'antd'
+import {
+  Table, Row, Col, Button, Card
+} from 'antd'
 
-let Enum = {
-  default: 1,
-}
+let Enum = { default: 1, }
 
 const IcoPage = () => {
   const handleButtonClick = (key) => {

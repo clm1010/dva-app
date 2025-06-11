@@ -1,6 +1,10 @@
 import React from 'react'
-import { Iconfont, Page } from 'components'
-import { Table, Row, Col, Icon } from 'antd'
+import {
+  Iconfont, Page
+} from 'components'
+import {
+  Table, Row, Col, Icon
+} from 'antd'
 import styles from './index.less'
 import './emoji'
 
@@ -97,7 +101,9 @@ const IcoPage = () => (<Page inner>
     </Col>
   </Row>
   <h2 style={{ margin: '16px 0' }}>Thanks</h2>
-  <div style={{ margin: '16px 0', lineHeight: 2 }}>
+  <div style={{
+ margin: '16px 0', lineHeight: 2
+}}>
     <p>
       <a href="http://www.iconfont.cn/user/detail?uid=116813">何阿酥</a> colorful fruit icon
       <a href="http://www.iconfont.cn/collections/detail?cid=4014" target="_blank" rel="noopener noreferrer"> http://www.iconfont.cn/collections/detail?cid=4014</a>

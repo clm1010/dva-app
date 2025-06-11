@@ -15,9 +15,7 @@ const option = {
   tooltip: {},
   visualMap: {
     max: 20,
-    inRange: {
-      color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'],
-    },
+    inRange: { color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'], },
   },
   xAxis3D: {
     type: 'category',
@@ -27,27 +25,19 @@ const option = {
     type: 'category',
     data: days,
   },
-  zAxis3D: {
-    type: 'value',
-  },
+  zAxis3D: { type: 'value', },
   grid3D: {
     boxWidth: 200,
     boxDepth: 80,
     light: {
-      main: {
-        intensity: 1.2,
-      },
-      ambient: {
-        intensity: 0.3,
-      },
+      main: { intensity: 1.2, },
+      ambient: { intensity: 0.3, },
     },
   },
   series: [{
     type: 'bar3D',
     data: data.map((item) => {
-      return {
-        value: [item[1], item[0], item[2]],
-      }
+      return { value: [item[1], item[0], item[2]], }
     }),
     shading: 'color',
 
@@ -59,20 +49,14 @@ const option = {
       },
     },
 
-    itemStyle: {
-      opacity: 0.4,
-    },
+    itemStyle: { opacity: 0.4, },
 
     emphasis: {
-      label: {
-        textStyle: {
-          fontSize: 20,
-          color: '#900',
-        },
-      },
-      itemStyle: {
+      label: { textStyle: {
+        fontSize: 20,
         color: '#900',
-      },
+      }, },
+      itemStyle: { color: '#900', },
     },
   }],
 }
@@ -80,7 +64,9 @@ const option = {
 const TransparentBar3DComPonent = () => {
   return (<ReactEcharts
     option={option}
-    style={{ height: '700px', width: '100%' }}
+    style={{
+ height: '700px', width: '100%'
+}}
     className="react_for_echarts"
   />)
 }

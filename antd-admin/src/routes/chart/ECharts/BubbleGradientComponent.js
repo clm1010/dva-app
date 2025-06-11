@@ -15,26 +15,14 @@ const option = {
     offset: 1,
     color: '#cdd0d5',
   }]),
-  title: {
-    text: '1990 与 2015 年各国家人均寿命与 GDP',
-  },
+  title: { text: '1990 与 2015 年各国家人均寿命与 GDP', },
   legend: {
     right: 10,
     data: ['1990', '2015'],
   },
-  xAxis: {
-    splitLine: {
-      lineStyle: {
-        type: 'dashed',
-      },
-    },
-  },
+  xAxis: { splitLine: { lineStyle: { type: 'dashed', }, }, },
   yAxis: {
-    splitLine: {
-      lineStyle: {
-        type: 'dashed',
-      },
-    },
+    splitLine: { lineStyle: { type: 'dashed', }, },
     scale: true,
   },
   series: [{
@@ -44,29 +32,25 @@ const option = {
     symbolSize (data) {
       return Math.sqrt(data[2]) / 5e2
     },
-    label: {
-      emphasis: {
-        show: true,
-        formatter (param) {
-          return param.data[3]
-        },
-        position: 'top',
+    label: { emphasis: {
+      show: true,
+      formatter (param) {
+        return param.data[3]
       },
-    },
-    itemStyle: {
-      normal: {
-        shadowBlur: 10,
-        shadowColor: 'rgba(120, 36, 50, 0.5)',
-        shadowOffsetY: 5,
-        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
-          offset: 0,
-          color: 'rgb(251, 118, 123)',
-        }, {
-          offset: 1,
-          color: 'rgb(204, 46, 72)',
-        }]),
-      },
-    },
+      position: 'top',
+    }, },
+    itemStyle: { normal: {
+      shadowBlur: 10,
+      shadowColor: 'rgba(120, 36, 50, 0.5)',
+      shadowOffsetY: 5,
+      color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+        offset: 0,
+        color: 'rgb(251, 118, 123)',
+      }, {
+        offset: 1,
+        color: 'rgb(204, 46, 72)',
+      }]),
+    }, },
   }, {
     name: '2015',
     data: currentData[1],
@@ -74,36 +58,34 @@ const option = {
     symbolSize (data) {
       return Math.sqrt(data[2]) / 5e2
     },
-    label: {
-      emphasis: {
-        show: true,
-        formatter (param) {
-          return param.data[3]
-        },
-        position: 'top',
+    label: { emphasis: {
+      show: true,
+      formatter (param) {
+        return param.data[3]
       },
-    },
-    itemStyle: {
-      normal: {
-        shadowBlur: 10,
-        shadowColor: 'rgba(25, 100, 150, 0.5)',
-        shadowOffsetY: 5,
-        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
-          offset: 0,
-          color: 'rgb(129, 227, 238)',
-        }, {
-          offset: 1,
-          color: 'rgb(25, 183, 207)',
-        }]),
-      },
-    },
+      position: 'top',
+    }, },
+    itemStyle: { normal: {
+      shadowBlur: 10,
+      shadowColor: 'rgba(25, 100, 150, 0.5)',
+      shadowOffsetY: 5,
+      color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+        offset: 0,
+        color: 'rgb(129, 227, 238)',
+      }, {
+        offset: 1,
+        color: 'rgb(25, 183, 207)',
+      }]),
+    }, },
   }],
 }
 
 const BubbleGradientComponent = () => {
   return (<ReactEcharts
     option={option}
-    style={{ height: '700px', width: '100%' }}
+    style={{
+ height: '700px', width: '100%'
+}}
     className="react_for_echarts"
   />)
 }

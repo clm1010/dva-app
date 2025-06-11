@@ -18,9 +18,13 @@ const EnumPostStatus = {
 const Index = ({
   post, dispatch, loading, location,
 }) => {
-  const { list, pagination } = post
+  const {
+    list, pagination
+  } = post
   location.query = queryString.parse(location.search)
-  const { query, pathname } = location
+  const {
+    query, pathname
+  } = location
 
   const listProps = {
     pagination,
@@ -41,9 +45,7 @@ const Index = ({
   const handleTabClick = (key) => {
     dispatch(routerRedux.push({
       pathname,
-      search: queryString.stringify({
-        status: key,
-      }),
+      search: queryString.stringify({ status: key, }),
     }))
   }
 
@@ -67,4 +69,8 @@ Index.propTypes = {
   dispatch: PropTypes.func,
 }
 
-export default connect(({ post, loading }) => ({ post, loading }))(Index)
+export default connect(({
+  post, loading
+}) => ({
+  post, loading
+}))(Index)

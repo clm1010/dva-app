@@ -27,13 +27,9 @@ const option = {
         quality: 'high',
       },
     },
-    temporalSuperSampling: {
-      enable: true,
-    },
+    temporalSuperSampling: { enable: true, },
     light: {
-      ambient: {
-        intensity: 0,
-      },
+      ambient: { intensity: 0, },
       main: {
         intensity: 2,
         shadow: true,
@@ -44,9 +40,7 @@ const option = {
         diffuseIntensity: 0.02,
       },
     },
-    viewControl: {
-      autoRotate: false,
-    },
+    viewControl: { autoRotate: false, },
   },
   series: [],
 }
@@ -54,7 +48,9 @@ const option = {
 const MoonComponent = () => {
   return (<ReactEcharts
     option={option}
-    style={{ height: '700px', width: '100%' }}
+    style={{
+ height: '700px', width: '100%'
+}}
     className="react_for_echarts"
   />)
 }

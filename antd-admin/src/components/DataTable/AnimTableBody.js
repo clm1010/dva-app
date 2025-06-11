@@ -40,7 +40,9 @@ const leaveAnim = [
   },
 ]
 
-const AnimTableBody = ({ body, page = 1, current }) => {
+const AnimTableBody = ({
+  body, page = 1, current
+}) => {
   if (current !== +page) {
     return body
   }

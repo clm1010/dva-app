@@ -42,8 +42,8 @@ module.exports = (webpackConfig, env) => {
       filename: production ? '../index.html' : 'index.html',
       minify: production
         ? {
-            collapseWhitespace: true
-          }
+          collapseWhitespace: true
+        }
         : null,
       hash: true,
       headScripts: production ? null : ['/roadhog.dll.js']

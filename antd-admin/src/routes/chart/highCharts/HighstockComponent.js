@@ -6,18 +6,12 @@ const data = [
 ]
 
 const config = {
-  rangeSelector: {
-    selected: 1,
-  },
-  title: {
-    text: 'AAPL Stock Price',
-  },
+  rangeSelector: { selected: 1, },
+  title: { text: 'AAPL Stock Price', },
   series: [{
     name: 'AAPL',
     data,
-    tooltip: {
-      valueDecimals: 2,
-    },
+    tooltip: { valueDecimals: 2, },
   }],
 }
 

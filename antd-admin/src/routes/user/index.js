@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+import {
+  Row, Col, Button, Popconfirm
+} from 'antd'
 import { Page } from 'components'
 import queryString from 'query-string'
 import List from './List'
@@ -14,7 +16,9 @@ const User = ({
   location, dispatch, user, loading,
 }) => {
   location.query = queryString.parse(location.search)
-  const { query, pathname } = location
+  const {
+    query, pathname
+  } = location
   const {
     list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys,
   } = user
@@ -34,9 +38,7 @@ const User = ({
       })
     },
     onCancel () {
-      dispatch({
-        type: 'user/hideModal',
-      })
+      dispatch({ type: 'user/hideModal', })
     },
   }
 
@@ -76,9 +78,7 @@ const User = ({
       onChange: (keys) => {
         dispatch({
           type: 'user/updateState',
-          payload: {
-            selectedRowKeys: keys,
-          },
+          payload: { selectedRowKeys: keys, },
         })
       },
     },
@@ -86,9 +86,7 @@ const User = ({
 
   const filterProps = {
     isMotion,
-    filter: {
-      ...query,
-    },
+    filter: { ...query, },
     onFilterChange (value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -106,16 +104,12 @@ const User = ({
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
-      })) : dispatch(routerRedux.push({
-        pathname: '/user',
-      }))
+      })) : dispatch(routerRedux.push({ pathname: '/user', }))
     },
     onAdd () {
       dispatch({
         type: 'user/showModal',
-        payload: {
-          modalType: 'create',
-        },
+        payload: { modalType: 'create', },
       })
     },
     switchIsMotion () {
@@ -126,9 +120,7 @@ const User = ({
   const handleDeleteItems = () => {
     dispatch({
       type: 'user/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
+      payload: { ids: selectedRowKeys, },
     })
   }
 
@@ -137,7 +129,10 @@ const User = ({
       <Filter {...filterProps} />
       {
         selectedRowKeys.length > 0 &&
-        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+        <Row style={{
+ marginBottom: 24, textAlign: 'right', fontSize: 13
+}}
+        >
           <Col>
             {`Selected ${selectedRowKeys.length} items `}
             <Popconfirm title="Are you sure delete these items?" placement="left" onConfirm={handleDeleteItems}>
@@ -159,4 +154,8 @@ User.propTypes = {
   loading: PropTypes.object,
 }
 
-export default connect(({ user, loading }) => ({ user, loading }))(User)
+export default connect(({
+  user, loading
+}) => ({
+  user, loading
+}))(User)

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Icon, Popover, Layout } from 'antd'
+import {
+  Menu, Icon, Popover, Layout
+} from 'antd'
 import classnames from 'classnames'
 import styles from './Header.less'
 import Menus from './Menu'
@@ -33,7 +35,10 @@ const Header = ({
             className={styles.button}
             onClick={switchSider}
         >
-          <Icon type={classnames({ 'menu-unfold': siderFold, 'menu-fold': !siderFold })} />
+          <Icon type={classnames({
+ 'menu-unfold': siderFold, 'menu-fold': !siderFold
+})}
+          />
         </div>}
       <div className={styles.rightWarpper}>
         <div className={styles.button}>
@@ -41,9 +46,7 @@ const Header = ({
         </div>
         <Menu mode="horizontal" onClick={handleClickMenu}>
           <SubMenu
-            style={{
-              float: 'right',
-            }}
+            style={{ float: 'right', }}
             title={<span>
               <Icon type="user" />
               {user.username}

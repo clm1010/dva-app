@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import './iconfont.less'
 
-const Iconfont = ({ type, colorful = false, className }) => {
+const Iconfont = ({
+  type, colorful = false, className
+}) => {
   if (colorful) {
     return (
       <svg className={classnames('colorful-icon', className)} aria-hidden="true">

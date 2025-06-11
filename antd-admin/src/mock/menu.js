@@ -156,9 +156,6 @@ let database = [
   },
 ]
 
-module.exports = {
-
-  [`GET ${apiPrefix}/menus`] (req, res) {
-    res.status(200).json(database)
-  },
-}
+module.exports = { [`GET ${apiPrefix}/menus`] (req, res) {
+  res.status(200).json(database)
+}, }

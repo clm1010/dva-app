@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route, Redirect, routerRedux } from 'dva/router'
+import {
+  Switch, Route, Redirect, routerRedux
+} from 'dva/router'
 import dynamic from 'dva/dynamic'
 import App from 'routes/app'
 
 const { ConnectedRouter } = routerRedux
 
-const Routers = function ({ history, app }) {
+const Routers = function ({
+  history, app
+}) {
   const error = dynamic({
     app,
     component: () => import('./routes/error'),
@@ -71,15 +75,17 @@ const Routers = function ({ history, app }) {
         <Switch>
           <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
           {
-            routes.map(({ path, ...dynamics }, key) => (
-              <Route key={key}
-                exact
-                path={path}
-                component={dynamic({
+            routes.map(({
+ path, ...dynamics
+}, key) => (
+  <Route key={key}
+    exact
+    path={path}
+    component={dynamic({
                   app,
                   ...dynamics,
                 })}
-              />
+  />
             ))
           }
           <Route component={error} />

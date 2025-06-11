@@ -51,9 +51,7 @@ const CalendarComponent = () => {
   links.pop()
 
   const option = {
-    tooltip: {
-      position: 'top',
-    },
+    tooltip: { position: 'top', },
     visualMap: [{
       min: 0,
       max: 1000,
@@ -70,12 +68,8 @@ const CalendarComponent = () => {
         opacity: [0, 0.3],
       },
       controller: {
-        inRange: {
-          opacity: [0.3, 0.6],
-        },
-        outOfRange: {
-          color: '#ccc',
-        },
+        inRange: { opacity: [0.3, 0.6], },
+        outOfRange: { color: '#ccc', },
       },
       calculable: true,
       seriesIndex: [1],
@@ -87,9 +81,7 @@ const CalendarComponent = () => {
     calendar: [
       {
         orient: 'vertical',
-        yearLabel: {
-          margin: 40,
-        },
+        yearLabel: { margin: 40, },
         monthLabel: {
           nameMap: 'cn',
           margin: 20,
@@ -103,33 +95,23 @@ const CalendarComponent = () => {
       },
       {
         orient: 'vertical',
-        yearLabel: {
-          margin: 40,
-        },
-        monthLabel: {
-          margin: 20,
-        },
+        yearLabel: { margin: 40, },
+        monthLabel: { margin: 20, },
         cellSize: 40,
         left: 460,
         range: '2017-01',
       },
       {
         orient: 'vertical',
-        yearLabel: {
-          margin: 40,
-        },
-        monthLabel: {
-          margin: 20,
-        },
+        yearLabel: { margin: 40, },
+        monthLabel: { margin: 20, },
         cellSize: 40,
         top: 350,
         range: '2017-03',
       },
       {
         orient: 'vertical',
-        yearLabel: {
-          margin: 40,
-        },
+        yearLabel: { margin: 40, },
         dayLabel: {
           firstDay: 1,
           nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
@@ -186,7 +168,9 @@ const CalendarComponent = () => {
         <label> render a calendar-charts </label>
         <ReactEcharts
           option={option}
-          style={{ height: '700px', width: '100%' }}
+          style={{
+ height: '700px', width: '100%'
+}}
           className="react_for_echarts"
         />
       </div>

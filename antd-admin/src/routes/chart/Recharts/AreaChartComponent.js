@@ -1,5 +1,7 @@
 import React from 'react'
-import { Row, Col, Card, Button } from 'antd'
+import {
+  Row, Col, Card, Button
+} from 'antd'
 import * as d3 from 'd3-shape'
 import {
   AreaChart,
@@ -189,7 +191,9 @@ const getPercent = (value, total) => {
 }
 
 const renderTooltipContent = (o) => {
-  const { payload, label } = o
+  const {
+    payload, label
+  } = o
   const total = payload.reduce((result, entry) => (result + entry.value), 0)
 
   return (
@@ -198,9 +202,7 @@ const renderTooltipContent = (o) => {
       <ul className="list">
         {payload.map((entry, index) => (
           <li key={`item-${index}`}
-            style={{
-              color: entry.color,
-            }}
+            style={{ color: entry.color, }}
           >
             {`${entry.name}: ${entry.value}(${getPercent(entry.value, total)})`}
           </li>

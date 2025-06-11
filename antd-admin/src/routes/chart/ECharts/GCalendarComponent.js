@@ -19,9 +19,7 @@ const GCalendarComponent = () => {
   }
 
   const option = {
-    tooltip: {
-      position: 'top',
-    },
+    tooltip: { position: 'top', },
     visualMap: {
       min: 0,
       max: 1000,
@@ -59,7 +57,9 @@ const GCalendarComponent = () => {
         <label> render a calendar like github commit history. </label>
         <ReactEcharts
           option={option}
-          style={{ height: '500px', width: '100%' }}
+          style={{
+ height: '500px', width: '100%'
+}}
           className="react_for_echarts"
         />
       </div>

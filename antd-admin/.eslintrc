@@ -4,17 +4,20 @@
     "arrow-parens": [0, "never"],
     "arrow-body-style": [0, "never"],
     "function-paren-newline": [0, "never"],
-    "comma-dangle": [2, "always-multiline"],
+    "comma-dangle": [0, "never"],
     "global-require": 0,
     "func-names": 0,
     "prefer-const": 0,
     "import/no-unresolved": 0,
     "import/extensions": 0,
     "max-len": 0,
-    "no-unused-expressions": [0, {
-      "allowShortCircuit": true,
-      "allowTernary": true
-    }],
+    "no-unused-expressions": [
+      0,
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
     "no-console": 0,
     "no-extend-native": 0,
     "no-param-reassign": 0,
@@ -25,8 +28,8 @@
     "no-plusplus": 0,
     "no-unused-vars": [2, { "ignoreRestSiblings": true }],
     "no-underscore-dangle": 0,
-    "space-before-function-paren": [2, "always"],
-    "semi": [2, "never"],
+    "space-before-function-paren": [0, "never"],
+    "semi": [0, "never"],
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
     "jsx-a11y/no-static-element-interactions": 0,
@@ -45,7 +48,12 @@
     "react/jsx-no-bind": 0,
     "react/no-danger": 0,
     "react/jsx-first-prop-new-line": 0,
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    "object-curly-newline": [0, "never"],
+    "linebreak-style": ["error", "unix"],
+    "no-restricted-globals": 0,
+    "generator-star-spacing": 0,
+    "jsx-quotes": 0
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -58,5 +66,5 @@
   },
   "settings": {
     "import/resolver": "node"
-    }
+  }
 }

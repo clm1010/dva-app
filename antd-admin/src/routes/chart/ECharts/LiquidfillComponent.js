@@ -4,14 +4,12 @@ import ReactEcharts from 'echarts-for-react'
 require('echarts-liquidfill')
 
 const LiquidfillComponent = () => {
-  const option = {
-    series: [
-      {
-        type: 'liquidFill',
-        data: [0.6],
-      },
-    ],
-  }
+  const option = { series: [
+    {
+      type: 'liquidFill',
+      data: [0.6],
+    },
+  ], }
   return (<div className="examples">
     <div className="parent">
       <label>

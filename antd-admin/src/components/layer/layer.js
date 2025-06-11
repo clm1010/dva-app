@@ -1,5 +1,7 @@
 /* global document */
-import { Modal, message } from 'antd'
+import {
+  Modal, message
+} from 'antd'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
@@ -51,11 +53,15 @@ layer.closeAll = () => {
 
 layer.open = (config) => {
   const props = Object.assign({}, config)
-  const { content, ...modalProps } = props
-  const { className, wrapClassName = '', verticalCenter = true } = modalProps
+  const {
+    content, ...modalProps
+  } = props
+  const {
+    className, wrapClassName = '', verticalCenter = true
+  } = modalProps
   const { prefixCls } = layer
   layer.index += 1
-  const index = layer.index
+  const { index } = layer
   let div = document.createElement('div')
   div.id = `${prefixCls}-reference-${index}`
   div.className = `${prefixCls}-reference`
@@ -67,13 +73,15 @@ layer.open = (config) => {
     transitionName="zoom"
     maskTransitionName="fade"
     onCancel={() => {
-        layer.close(index)
-      }}
+      layer.close(index)
+    }}
     onOk={() => {
-        layer.close(index)
-      }}
+      layer.close(index)
+    }}
     {...modalProps}
-    wrapClassName={classnames({ [styles.verticalCenter]: verticalCenter, [wrapClassName]: true })}
+    wrapClassName={classnames({
+      [styles.verticalCenter]: verticalCenter, [wrapClassName]: true
+    })}
     className={classnames(prefixCls, className, [`${prefixCls}-${index}`])}
   >
     <div className={`${prefixCls}-body-wrapper`} style={{ maxHeight: document.body.clientHeight - 256 }}>

@@ -1,24 +1,47 @@
 import React from 'react'
-import { DropOption, Page } from 'components'
-import { Table, Row, Col, Card, message } from 'antd'
+import {
+  DropOption, Page
+} from 'components'
+import {
+  Table, Row, Col, Card, message
+} from 'antd'
 
 const DropOptionPage = () => (<Page inner>
   <Row gutter={32}>
     <Col lg={8} md={12}>
       <Card title="默认">
-        <DropOption menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />
+        <DropOption menuOptions={[{
+ key: '1', name: '编辑'
+}, {
+ key: '2', name: '删除'
+}]}
+        />
       </Card>
     </Col>
     <Col lg={8} md={12}>
       <Card title="样式">
-        <DropOption menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} buttonStyle={{ border: 'solid 1px #eee', width: 60 }} />
+        <DropOption menuOptions={[{
+ key: '1', name: '编辑'
+}, {
+ key: '2', name: '删除'
+}]}
+          buttonStyle={{
+ border: 'solid 1px #eee', width: 60
+}}
+        />
       </Card>
     </Col>
     <Col lg={8} md={12}>
       <Card title="事件">
         <DropOption
-          menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]}
-          buttonStyle={{ border: 'solid 1px #eee', width: 60 }}
+          menuOptions={[{
+ key: '1', name: '编辑'
+}, {
+ key: '2', name: '删除'
+}]}
+          buttonStyle={{
+ border: 'solid 1px #eee', width: 60
+}}
           onMenuClick={({ key }) => {
             switch (key) {
               case '1':

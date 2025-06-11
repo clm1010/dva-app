@@ -15,9 +15,7 @@ export default class Page extends Component {
     }
     return (
       <div
-        className={classnames(className, {
-          [styles.contentInner]: inner,
-        })}
+        className={classnames(className, { [styles.contentInner]: inner, })}
         style={loading ? loadingStyle : null}
       >
         {loading ? <Loader spinning /> : ''}

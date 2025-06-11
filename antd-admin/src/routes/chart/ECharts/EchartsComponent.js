@@ -44,8 +44,6 @@ const EchartsComponent = ({ type }) => {
   return (<DynamicChartComponent />)
 }
 
-EchartsComponent.propTypes = {
-  type: PropTypes.string,
-}
+EchartsComponent.propTypes = { type: PropTypes.string, }
 
 export default EchartsComponent

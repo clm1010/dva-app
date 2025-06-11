@@ -3,36 +3,26 @@ import ReactHighmaps from 'react-highcharts/ReactHighmaps.src'
 import maps from './mapdata/europe'
 
 const config = {
-  chart: {
-    spacingBottom: 20,
-  },
-  title: {
-    text: 'Europe time zones',
-  },
+  chart: { spacingBottom: 20, },
+  title: { text: 'Europe time zones', },
 
-  legend: {
-    enabled: true,
-  },
+  legend: { enabled: true, },
 
-  plotOptions: {
-    map: {
-      allAreas: false,
-      joinBy: ['iso-a2', 'code'],
-      dataLabels: {
-        enabled: true,
-        color: 'white',
-        style: {
-          fontWeight: 'bold',
-        },
-      },
-      mapData: maps,
-      tooltip: {
-        headerFormat: '',
-        pointFormat: '{point.name}: <b>{series.name}</b>',
-      },
-
+  plotOptions: { map: {
+    allAreas: false,
+    joinBy: ['iso-a2', 'code'],
+    dataLabels: {
+      enabled: true,
+      color: 'white',
+      style: { fontWeight: 'bold', },
     },
-  },
+    mapData: maps,
+    tooltip: {
+      headerFormat: '',
+      pointFormat: '{point.name}: <b>{series.name}</b>',
+    },
+
+  }, },
 
   series: [{
     name: 'UTC',

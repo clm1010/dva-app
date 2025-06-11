@@ -16,9 +16,7 @@ const ThemeChartComponent = () => {
         type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
       },
     },
-    legend: {
-      data: ['支出', '收入'],
-    },
+    legend: { data: ['支出', '收入'], },
     grid: {
       left: '3%',
       right: '4%',
@@ -30,9 +28,7 @@ const ThemeChartComponent = () => {
       splitLine: { show: false },
       data: ['11月1日', '11月2日', '11月3日', '11月4日', '11月5日', '11月6日', '11月7日', '11月8日', '11月9日', '11月10日', '11月11日'],
     },
-    yAxis: {
-      type: 'value',
-    },
+    yAxis: { type: 'value', },
     series: [
       {
         name: '辅助',
@@ -54,33 +50,27 @@ const ThemeChartComponent = () => {
         name: '收入',
         type: 'bar',
         stack: '总量',
-        label: {
-          normal: {
-            show: true,
-            position: 'top',
-          },
-        },
+        label: { normal: {
+          show: true,
+          position: 'top',
+        }, },
         data: [900, 345, 393, '-', '-', 135, 178, 286, '-', '-', '-'],
       },
       {
         name: '支出',
         type: 'bar',
         stack: '总量',
-        label: {
-          normal: {
-            show: true,
-            position: 'bottom',
-          },
-        },
+        label: { normal: {
+          show: true,
+          position: 'bottom',
+        }, },
         data: ['-', '-', '-', 108, 154, '-', '-', '-', 119, 361, 203],
       },
     ],
   }
 
 
-  echarts.registerTheme('my_theme', {
-    backgroundColor: '#f4cccc',
-  })
+  echarts.registerTheme('my_theme', { backgroundColor: '#f4cccc', })
 
   let code = "echarts.registerTheme('my_theme', {\n" +
                    "  backgroundColor: '#f4cccc'\n" +

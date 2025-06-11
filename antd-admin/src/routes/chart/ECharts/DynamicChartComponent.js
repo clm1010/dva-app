@@ -8,15 +8,9 @@ class DynamicChartComponent extends React.Component {
     this.count = 51
 
     const option = {
-      title: {
-        text: 'Hello Echarts-for-react.',
-      },
-      tooltip: {
-        trigger: 'axis',
-      },
-      legend: {
-        data: ['最新成交价', '预购队列'],
-      },
+      title: { text: 'Hello Echarts-for-react.', },
+      tooltip: { trigger: 'axis', },
+      legend: { data: ['最新成交价', '预购队列'], },
       toolbox: {
         show: true,
         feature: {
@@ -96,11 +90,7 @@ class DynamicChartComponent extends React.Component {
           type: 'bar',
           xAxisIndex: 1,
           yAxisIndex: 1,
-          itemStyle: {
-            normal: {
-              barBorderRadius: 4,
-            },
-          },
+          itemStyle: { normal: { barBorderRadius: 4, }, },
           animationEasing: 'elasticOut',
           animationDelay (idx) {
             return idx * 10
@@ -133,9 +123,7 @@ class DynamicChartComponent extends React.Component {
       ],
     }
 
-    this.state = {
-      option,
-    }
+    this.state = { option, }
 
     this.fetchNewDate = this.fetchNewDate.bind(this)
   }

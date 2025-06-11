@@ -1,6 +1,10 @@
 import React from 'react'
-import { Search, Page } from 'components'
-import { Table, Row, Col, Card } from 'antd'
+import {
+  Search, Page
+} from 'components'
+import {
+  Table, Row, Col, Card
+} from 'antd'
 
 const SearchPage = () => (<Page inner>
   <Row gutter={32}>
@@ -15,12 +19,14 @@ const SearchPage = () => (<Page inner>
           {...{
             select: true,
             selectOptions: [
-              { value: 'components', name: '组件' },
-              { value: 'page', name: '页面' },
+              {
+ value: 'components', name: '组件'
+},
+              {
+ value: 'page', name: '页面'
+},
             ],
-            selectProps: {
-              defaultValue: 'components',
-            },
+            selectProps: { defaultValue: 'components', },
           }}
         />
       </Card>

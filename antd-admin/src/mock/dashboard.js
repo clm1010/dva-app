@@ -19,9 +19,7 @@ const Dashboard = Mock.mock({
     space: 825,
     'cpu|40-90': 1,
     'data|20': [
-      {
-        'cpu|20-80': 1,
-      },
+      { 'cpu|20-80': 1, },
     ],
   },
   browser: [
@@ -125,8 +123,6 @@ const Dashboard = Mock.mock({
   ],
 })
 
-module.exports = {
-  [`GET ${apiPrefix}/dashboard`] (req, res) {
-    res.json(Dashboard)
-  },
-}
+module.exports = { [`GET ${apiPrefix}/dashboard`] (req, res) {
+  res.json(Dashboard)
+}, }

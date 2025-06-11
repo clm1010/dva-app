@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col, Card, Button } from 'antd'
+import {
+  Row, Col, Card, Button
+} from 'antd'
 import {
   LineChart,
   Line,
@@ -74,9 +76,7 @@ const SimpleLineChart = () => (
       <Line type="monotone"
         dataKey="pv"
         stroke="#8884d8"
-        activeDot={{
-          r: 8,
-        }}
+        activeDot={{ r: 8, }}
       />
       <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
     </LineChart>
@@ -131,7 +131,9 @@ const DashedLineChart = () => (
 )
 
 // CustomizedDotLineChart
-const CustomizedDot = ({ cx, cy, payload }) => {
+const CustomizedDot = ({
+  cx, cy, payload
+}) => {
   if (payload.value > 2500) {
     return (
       <svg x={cx - 10} y={cy - 10} width={20} height={20} fill="red" viewBox="0 0 1024 1024">

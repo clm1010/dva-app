@@ -1,4 +1,6 @@
-import { request, config } from 'utils'
+import {
+  request, config
+} from 'utils'
 
 const { APIV1 } = config
 

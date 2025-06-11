@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import {
+  Form, Input, InputNumber, Radio, Modal, Cascader
+} from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
 
 const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
+  labelCol: { span: 6, },
+  wrapperCol: { span: 14, },
 }
 
 const modal = ({
@@ -50,9 +48,7 @@ const modal = ({
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
-              {
-                required: true,
-              },
+              { required: true, },
             ],
           })(<Input />)}
         </FormItem>
@@ -60,9 +56,7 @@ const modal = ({
           {getFieldDecorator('nickName', {
             initialValue: item.nickName,
             rules: [
-              {
-                required: true,
-              },
+              { required: true, },
             ],
           })(<Input />)}
         </FormItem>
@@ -119,9 +113,7 @@ const modal = ({
           {getFieldDecorator('address', {
             initialValue: item.address && item.address.split(' '),
             rules: [
-              {
-                required: true,
-              },
+              { required: true, },
             ],
           })(<Cascader
             style={{ width: '100%' }}

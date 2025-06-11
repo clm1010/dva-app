@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Icon } from 'antd'
+import {
+  Menu, Icon
+} from 'antd'
 import { Link } from 'react-router-dom'
-import { arrayToTree, queryArray } from 'utils'
+import {
+  arrayToTree, queryArray
+} from 'utils'
 import pathToRegexp from 'path-to-regexp'
 
 const Menus = ({

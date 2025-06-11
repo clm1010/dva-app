@@ -4,20 +4,10 @@ import './theme/macarons.js'
 
 const SimpleChartComponent = () => {
   const option = {
-    title: {
-      text: '堆叠区域图',
-    },
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: ['邮件营销', '联盟广告', '视频广告'],
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
+    title: { text: '堆叠区域图', },
+    tooltip: { trigger: 'axis', },
+    legend: { data: ['邮件营销', '联盟广告', '视频广告'], },
+    toolbox: { feature: { saveAsImage: {}, }, },
     grid: {
       left: '3%',
       right: '4%',
@@ -32,9 +22,7 @@ const SimpleChartComponent = () => {
       },
     ],
     yAxis: [
-      {
-        type: 'value',
-      },
+      { type: 'value', },
     ],
     series: [
       {
@@ -70,7 +58,9 @@ const SimpleChartComponent = () => {
         <label> render a Simple echart With <strong>option and height</strong>: </label>
         <ReactEcharts
           option={option}
-          style={{ height: '350px', width: '100%' }}
+          style={{
+ height: '350px', width: '100%'
+}}
           className="react_for_echarts"
           theme="macarons"
         />

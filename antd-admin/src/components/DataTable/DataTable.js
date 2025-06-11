@@ -34,7 +34,9 @@ class DataTable extends React.Component {
   componentWillReceiveProps (nextProps) {
     const staticNextProps = lodash.cloneDeep(nextProps)
     delete staticNextProps.columns
-    const { columns, ...otherProps } = this.props
+    const {
+      columns, ...otherProps
+    } = this.props
 
     if (!lodash.isEqual(staticNextProps, otherProps)) {
       this.props = nextProps
@@ -60,7 +62,9 @@ class DataTable extends React.Component {
   }
 
   fetch = () => {
-    const { fetch: { url, data, dataKey } } = this.props
+    const { fetch: {
+      url, data, dataKey
+    } } = this.props
     const { fetchData } = this.state
     this.setState({ loading: true })
     this.promise = request({
@@ -84,8 +88,12 @@ class DataTable extends React.Component {
   }
 
   render () {
-    const { fetch, ...tableProps } = this.props
-    const { loading, dataSource, pagination } = this.state
+    const {
+      fetch, ...tableProps
+    } = this.props
+    const {
+      loading, dataSource, pagination
+    } = this.state
 
     return (<Table
       ref="DataTable"
