@@ -61,6 +61,14 @@ function Comments({ data }) {
   )
 }
 
-Comments.propTypes = { data: PropTypes.array }
+Comments.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    status: PropTypes.number,
+    content: PropTypes.string,
+    avatar: PropTypes.string,
+    date: PropTypes.string
+  }))
+}
 
 export default Comments

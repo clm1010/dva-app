@@ -3,52 +3,52 @@ const { config } = require('./common')
 const { apiPrefix } = config
 let database = [
   {
-    id: '1',
+    id: 1,
     icon: 'dashboard',
     name: 'Dashboard',
-    route: '/dashboard',
+    route: '/dashboard'
   },
   {
-    id: '2',
-    bpid: '1',
+    id: 2,
+    bpid: 1,
     name: 'Users',
     icon: 'user',
-    route: '/user',
+    route: '/user'
   },
   {
-    id: '7',
-    bpid: '1',
+    id: 7,
+    bpid: 1,
     name: 'Posts',
     icon: 'shopping-cart',
-    route: '/post',
+    route: '/post'
   },
   {
-    id: '21',
-    mpid: '-1',
-    bpid: '2',
+    id: 21,
+    mpid: -1,
+    bpid: 2,
     name: 'User Detail',
-    route: '/user/:id',
+    route: '/user/:id'
   },
   {
-    id: '3',
-    bpid: '1',
+    id: 3,
+    bpid: 1,
     name: 'Request',
     icon: 'api',
-    route: '/request',
+    route: '/request'
   },
   {
-    id: '4',
-    bpid: '1',
+    id: 4,
+    bpid: 1,
     name: 'UI Element',
-    icon: 'camera-o',
+    icon: 'camera-o'
   },
   {
-    id: '41',
-    bpid: '4',
-    mpid: '4',
+    id: 41,
+    bpid: 4,
+    mpid: 4,
     name: 'IconFont',
     icon: 'heart-o',
-    route: '/UIElement/iconfont',
+    route: '/UIElement/iconfont'
   },
   // {
   //   id: '42',
@@ -59,20 +59,20 @@ let database = [
   //   route: '/UIElement/dataTable',
   // },
   {
-    id: '43',
-    bpid: '4',
-    mpid: '4',
+    id: 43,
+    bpid: 4,
+    mpid: 4,
     name: 'DropOption',
     icon: 'bars',
-    route: '/UIElement/dropOption',
+    route: '/UIElement/dropOption'
   },
   {
-    id: '44',
-    bpid: '4',
-    mpid: '4',
+    id: 44,
+    bpid: 4,
+    mpid: 4,
     name: 'Search',
     icon: 'search',
-    route: '/UIElement/search',
+    route: '/UIElement/search'
   },
   // {
   //   id: '45',
@@ -91,71 +91,87 @@ let database = [
   //   route: '/UIElement/layer',
   // },
   {
-    id: '5',
-    bpid: '1',
+    id: 5,
+    bpid: 1,
     name: 'Charts',
-    icon: 'code-o',
+    icon: 'code-o'
   },
   {
-    id: '51',
-    bpid: '5',
-    mpid: '5',
+    id: 51,
+    bpid: 5,
+    mpid: 5,
     name: 'ECharts',
     icon: 'line-chart',
-    route: '/chart/ECharts',
+    route: '/chart/ECharts'
   },
   {
-    id: '52',
-    bpid: '5',
-    mpid: '5',
+    id: 52,
+    bpid: 5,
+    mpid: 5,
     name: 'highCharts',
     icon: 'bar-chart',
-    route: '/chart/highCharts',
+    route: '/chart/highCharts'
   },
   {
-    id: '53',
-    bpid: '5',
-    mpid: '5',
+    id: 53,
+    bpid: 5,
+    mpid: 5,
     name: 'Rechartst',
     icon: 'area-chart',
-    route: '/chart/Recharts',
+    route: '/chart/Recharts'
   },
   {
-    id: '6',
-    bpid: '1',
+    id: 8,
+    bpid: 1,
+    name: '性能管理',
+    icon: 'dashboard',
+    route: '/myPerForm'
+  },
+  {
+    id: 9,
+    bpid: 1,
+    name: 'QPS监控',
+    icon: 'line-chart',
+    route: '/qps'
+  },
+  {
+    id: 6,
+    bpid: 1,
     name: 'Test Navigation',
-    icon: 'setting',
+    icon: 'setting'
   },
   {
-    id: '61',
-    bpid: '6',
-    mpid: '6',
+    id: 61,
+    bpid: 6,
+    mpid: 6,
     name: 'Test Navigation1',
-    route: '/navigation/navigation1',
+    route: '/navigation/navigation1'
   },
   {
-    id: '62',
-    bpid: '6',
-    mpid: '6',
+    id: 62,
+    bpid: 6,
+    mpid: 6,
     name: 'Test Navigation2',
-    route: '/navigation/navigation2',
+    route: '/navigation/navigation2'
   },
   {
-    id: '621',
-    bpid: '62',
-    mpid: '62',
+    id: 621,
+    bpid: 62,
+    mpid: 62,
     name: 'Test Navigation21',
-    route: '/navigation/navigation2/navigation1',
+    route: '/navigation/navigation2/navigation1'
   },
   {
-    id: '622',
-    bpid: '62',
-    mpid: '62',
+    id: 622,
+    bpid: 62,
+    mpid: 62,
     name: 'Test Navigation22',
-    route: '/navigation/navigation2/navigation2',
-  },
+    route: '/navigation/navigation2/navigation2'
+  }
 ]
 
-module.exports = { [`GET ${apiPrefix}/menus`] (req, res) {
-  res.status(200).json(database)
-}, }
+module.exports = {
+  [`GET ${apiPrefix}/menus`](req, res) {
+    res.status(200).json(database)
+  }
+}

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="A admin dashboard application demo built upon Ant Design and Dva.js">
+  <meta http-equiv="Permissions-Policy" content="unload=*, interest-cohort=()">
   <title>antd admin</title>
   <!--[if lte IE 10]>
       <script
@@ -15,6 +16,112 @@
   <% for (item of htmlWebpackPlugin.options.headScripts) { %>
     <script src="<%= item %>"></script>
   <% } %>
+  <script>
+    // 处理权限策略和其他浏览器兼容性问题
+    (function() {
+      // 禁用 unload 事件监听器来避免权限策略违规
+      if (typeof window !== 'undefined') {
+        const originalAddEventListener = window.addEventListener;
+        window.addEventListener = function(type, listener, options) {
+          if (type === 'unload' || type === 'beforeunload') {
+            return;
+          }
+          return originalAddEventListener.call(this, type, listener, options);
+        };
+      }
+    })();
+
+    // ECharts passive事件修复 - 全局应用
+    (function() {
+      if (typeof window !== 'undefined' && !window._echartsPassiveEventFixed) {
+        window._originalAddEventListener = window.EventTarget.prototype.addEventListener;
+        window._echartsContainers = new Set();
+
+        window.EventTarget.prototype.addEventListener = function(type, listener, options) {
+          if (type === 'mousewheel' || type === 'wheel') {
+            let isEchartsElement = false;
+
+            // 检查是否为注册的ECharts容器
+            if (window._echartsContainers && window._echartsContainers.has(this)) {
+              isEchartsElement = true;
+            }
+
+            // 检查元素属性
+            if (!isEchartsElement && this && typeof this.tagName === 'string') {
+              const element = this;
+              const tagName = element.tagName.toLowerCase();
+
+              // Canvas元素可能是ECharts的渲染层
+              if (tagName === 'canvas') {
+                // 检查父元素是否有ECharts标识
+                let parent = element.parentElement;
+                while (parent && !isEchartsElement) {
+                  if (parent.getAttribute &&
+                      (parent.getAttribute('_echarts_instance_') ||
+                       parent.getAttribute('data-echarts') ||
+                       parent.getAttribute('echarts-container') ||
+                       (parent.className && typeof parent.className === 'string' &&
+                        (parent.className.includes('echarts') || parent.className.includes('zr-'))))) {
+                    isEchartsElement = true;
+                    break;
+                  }
+                  parent = parent.parentElement;
+                }
+              }
+
+              // 检查div容器
+              if (!isEchartsElement && tagName === 'div') {
+                if (element.getAttribute) {
+                  const echartsInstance = element.getAttribute('_echarts_instance_');
+                  const dataEcharts = element.getAttribute('data-echarts');
+                  const echartsContainer = element.getAttribute('echarts-container');
+
+                  if (echartsInstance || dataEcharts || echartsContainer) {
+                    isEchartsElement = true;
+                  }
+                }
+
+                if (!isEchartsElement && element.className && typeof element.className === 'string') {
+                  if (element.className.includes('echarts') ||
+                      element.className.includes('zr-') ||
+                      element.className.includes('chart-container')) {
+                    isEchartsElement = true;
+                  }
+                }
+              }
+            }
+
+            // 对于ECharts元素，确保可以preventDefault
+            if (isEchartsElement) {
+              if (typeof options === 'boolean') {
+                options = { capture: options, passive: false };
+              } else if (typeof options === 'object' && options !== null) {
+                options = { ...options, passive: false };
+              } else {
+                options = { passive: false };
+              }
+            } else if (typeof options === 'boolean') {
+              // 对于非ECharts元素，设置passive: true以符合浏览器要求
+              options = { capture: options, passive: true };
+            } else if (typeof options === 'object' && options !== null) {
+              options = { ...options, passive: true };
+            } else {
+              options = { passive: true };
+            }
+          }
+
+          if (window._originalAddEventListener && typeof window._originalAddEventListener === 'function') {
+            return window._originalAddEventListener.call(this, type, listener, options);
+          }
+
+          console.error('原生addEventListener方法不可用');
+          return false;
+        };
+
+        window._echartsPassiveEventFixed = true;
+      }
+    })();
+  </script>
 </head>
 
 <body>

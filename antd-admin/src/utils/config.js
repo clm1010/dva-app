@@ -1,5 +1,6 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
+const ES_API = '/api/es'
 
 module.exports = {
   name: 'AntD Admin',
@@ -13,6 +14,7 @@ module.exports = {
   apiPrefix: '/api/v1',
   APIV1,
   APIV2,
+  ES_API,
   api: {
     userLogin: `${APIV1}/user/login`,
     userLogout: `${APIV1}/user/logout`,
@@ -25,5 +27,6 @@ module.exports = {
     weather: `${APIV1}/weather`,
     v1test: `${APIV1}/test`,
     v2test: `${APIV2}/test`,
+    es: `${ES_API}`,
   },
 }

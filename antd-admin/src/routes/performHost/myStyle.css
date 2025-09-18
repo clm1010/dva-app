@@ -1,0 +1,7 @@
+.modalStyle{
+	width: 100%;
+	height: 700px;
+	float: left;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}

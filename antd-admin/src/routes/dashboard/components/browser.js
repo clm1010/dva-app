@@ -36,6 +36,12 @@ function Browser({ data }) {
   )
 }
 
-Browser.propTypes = { data: PropTypes.array }
+Browser.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    percent: PropTypes.number,
+    status: PropTypes.number
+  }))
+}
 
 export default Browser

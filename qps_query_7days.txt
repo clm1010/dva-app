@@ -1,0 +1,80 @@
+GET /u2performance_for_test/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "clock": {
+              "gte": 1749348489,
+              "lte": 1752330646
+            }
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "group_by_device": {
+      "terms": {
+        "field": "hostname",
+        "size": 1000
+      },
+      "aggs": {
+        "latest_info": {
+          "top_hits": {
+            "sort": [
+              {
+                "clock": {
+                  "order": "asc"
+                }
+              }
+            ],
+            "_source": {
+              "include": [
+                "hostname",
+                "hostip",
+                "bizarea",
+                "vendor",
+                "component",
+                "clock",
+                "value",
+                "@timestamp"
+              ]
+            },
+            "size": 1
+          }
+        },
+        "time_series": {
+          "histogram": {
+            "field": "clock",
+            "interval": 3600,
+            "min_doc_count": 0
+          },
+          "aggs": {
+            "values": {
+              "top_hits": {
+                "sort": [
+                  {
+                    "clock": {
+                      "order": "asc"
+                    }
+                  }
+                ],
+                "_source": {
+                  "include": [
+                    "clock",
+                    "value",
+                    "@timestamp"
+                  ]
+                },
+                "size": 100
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

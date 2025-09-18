@@ -44,7 +44,7 @@ function Cpu({ usage, space, cpu, data }) {
         </div>
       </div>
       <ResponsiveContainer minHeight={300}>
-        <LineChart data={data} margin={{ left: -40 }}>
+        <LineChart data={data || []} margin={{ left: -40 }}>
           <XAxis
             dataKey='name'
             axisLine={{
@@ -73,10 +73,13 @@ function Cpu({ usage, space, cpu, data }) {
 }
 
 Cpu.propTypes = {
-  data: PropTypes.array,
   usage: PropTypes.number,
   space: PropTypes.number,
-  cpu: PropTypes.number
+  cpu: PropTypes.number,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    cpu: PropTypes.number
+  }))
 }
 
 export default Cpu

@@ -2,6 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 
+// 简化的配置，移除复杂的警告过滤器
+
 module.exports = (webpackConfig, env) => {
   const production = env === 'production'
   // FilenameHash
@@ -47,8 +49,18 @@ module.exports = (webpackConfig, env) => {
         : null,
       hash: true,
       headScripts: production ? null : ['/roadhog.dll.js']
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development')
     })
   ])
+
+  // 简化配置，移除警告过滤
+  if (!production) {
+    webpackConfig.stats = {
+      warnings: false
+    }
+  }
 
   // Alias
   webpackConfig.resolve.alias = {

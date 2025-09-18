@@ -30,15 +30,61 @@ const Bread = ({
 
   let paramMap = {}
   if (!current) {
-    pathArray.push(menu[0] || {
-      id: 1,
-      icon: 'laptop',
-      name: 'Dashboard',
-    })
-    pathArray.push({
-      id: 404,
-      name: 'Not Found',
-    })
+    // 特殊处理 performHost 路径
+    if (location.pathname === '/performHost') {
+      // 添加 Dashboard 作为根路径
+      pathArray.push(menu[0] || {
+        id: 1,
+        icon: 'laptop',
+        name: 'Dashboard',
+        route: '/dashboard'
+      })
+      // 添加性能管理作为父级
+      pathArray.push({
+        id: 8,
+        icon: 'dashboard',
+        name: '性能管理',
+        route: '/myPerForm'
+      })
+      // 添加当前页面
+      pathArray.push({
+        id: 9,
+        icon: 'line-chart',
+        name: '性能监控'
+      })
+    } else if (location.pathname === '/qps/chddetail') {
+      // 特殊处理 qps/chddetail 路径
+      // 添加 Dashboard 作为根路径
+      pathArray.push(menu[0] || {
+        id: 1,
+        icon: 'laptop',
+        name: 'Dashboard',
+        route: '/dashboard'
+      })
+      // 添加QPS监控作为父级
+      pathArray.push({
+        id: 9,
+        icon: 'line-chart',
+        name: 'QPS监控',
+        route: '/qps'
+      })
+      // 添加当前页面
+      pathArray.push({
+        id: 91,
+        icon: 'eye',
+        name: '设备详情'
+      })
+    } else {
+      pathArray.push(menu[0] || {
+        id: 1,
+        icon: 'laptop',
+        name: 'Dashboard',
+      })
+      pathArray.push({
+        id: 404,
+        name: 'Not Found',
+      })
+    }
   } else {
     getPathArray(current)
 

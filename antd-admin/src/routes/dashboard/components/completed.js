@@ -15,6 +15,18 @@ import {
 import styles from './completed.less'
 
 function Completed({ data }) {
+  // 如果没有数据，显示占位符
+  if (!data || data.length === 0) {
+    return (
+      <div className={styles.sales}>
+        <div className={styles.title}>TEAM TOTAL COMPLETED</div>
+        <div style={{ height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
+          暂无数据
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.sales}>
       <div className={styles.title}>TEAM TOTAL COMPLETED</div>
@@ -113,6 +125,12 @@ function Completed({ data }) {
   )
 }
 
-Completed.propTypes = { data: PropTypes.array }
+Completed.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    'Task complete': PropTypes.number,
+    'Cards Complete': PropTypes.number
+  }))
+}
 
 export default Completed

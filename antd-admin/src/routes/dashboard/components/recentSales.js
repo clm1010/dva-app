@@ -61,6 +61,13 @@ function RecentSales({ data }) {
   )
 }
 
-RecentSales.propTypes = { data: PropTypes.array }
+RecentSales.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    status: PropTypes.number,
+    date: PropTypes.string,
+    price: PropTypes.number
+  }))
+}
 
 export default RecentSales

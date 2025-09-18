@@ -44,7 +44,16 @@ const App = ({
     iconFontJS, iconFontCSS, logo
   } = config
   const current = menu.filter(item => pathToRegexp(item.route || '').exec(pathname))
-  const hasPermission = current.length ? permissions.visit.includes(current[0].id) : false
+  // 对于 performHost 路径，如果用户有访问 myPerForm 的权限，则允许访问
+  // 对于 qps/chddetail 路径，如果用户有访问 qps 的权限，则允许访问
+  let hasPermission = false
+  if (current.length) {
+    hasPermission = permissions.visit.includes(current[0].id)
+  } else if (pathname === '/performHost') {
+    hasPermission = permissions.visit.includes(8) // 8 是 myPerForm 的 id
+  } else if (pathname === '/qps/chddetail') {
+    hasPermission = permissions.visit.includes(9) // 9 是 QPS监控 的 id
+  }
   const { href } = window.location
 
   if (lastHref !== href) {

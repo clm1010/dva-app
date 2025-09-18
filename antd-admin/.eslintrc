@@ -66,5 +66,8 @@
   },
   "settings": {
     "import/resolver": "node"
+  },
+  "globals": {
+    "localStorage": "readonly"
   }
 }

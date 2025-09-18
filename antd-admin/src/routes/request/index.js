@@ -126,28 +126,28 @@ export default class RequestPage extends React.Component {
       )
     })
     request({ ...requestParams }).then((data) => {
-      const state = this.state
-      state.result = [
-        this.state.result,
-        <div key='complete'>
-          <div>请求完成</div>
-          {JSON.stringify(data)}
-        </div>
-      ]
-      this.setState(state)
+      const { result } = this.state
+      this.setState({
+        result: [
+          result,
+          <div key='complete'>
+            <div>请求完成</div>
+            {JSON.stringify(data)}
+          </div>
+        ]
+      })
     })
   }
 
   handeleURLChange = (value) => {
-    const state = this.state
     const curretUrl = value.split('?')[0]
     const curretMethod = value.split('?')[1]
     const currntItem = requestOptions.filter((item) => {
       const { method = 'get' } = item
       return curretUrl === item.url && curretMethod === method
     })
-    state.currntRequest = currntItem[0]
-    this.setState(state)
+    const [currntRequest] = currntItem
+    this.setState({ currntRequest })
   }
 
   render() {

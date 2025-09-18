@@ -1,0 +1,105 @@
+GET /u2performance_for_test/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "clock": {
+              "gte": 1749348489,
+              "lte": 1752330646
+            }
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "group_by_device": {
+      "terms": {
+        "field": "appcode",
+        "size": 1000,
+        "order": {
+          "_key": "asc"
+        }
+      },
+      "aggs": {
+        "latest_info": {
+          "top_hits": {
+            "sort": [
+              {
+                "clock": {
+                  "order": "desc"
+                }
+              }
+            ],
+            "_source": {
+              "include": [
+                "agent",
+                "appname",
+                "appcode",
+                "@version",
+                "branchnamecn",
+                "hostname",
+                "hostip",
+                "bizarea",
+                "vendor",
+                "component",
+                "clock",
+                "value",
+                "@timestamp"
+              ]
+            },
+            "size": 1
+          }
+        },
+        "hostip_values": {
+          "terms": {
+            "field": "hostip",
+            "size": 1000,
+            "order": {
+              "_key": "asc"
+            }
+          },
+          "aggs": {
+            "all_values": {
+              "top_hits": {
+                "sort": [
+                  {
+                    "clock": {
+                      "order": "asc"
+                    }
+                  }
+                ],
+                "_source": {
+                  "include": [
+                    "agent",
+                    "appname",
+                    "appcode",
+                    "@version",
+                    "branchnamecn",
+                    "hostname",
+                    "hostip",
+                    "bizarea",
+                    "vendor",
+                    "component",
+                    "clock",
+                    "value",
+                    "@timestamp"
+                  ]
+                },
+                "size": 100
+              }
+            }
+          }
+        },
+        "device_count": {
+          "cardinality": {
+            "field": "hostip"
+          }
+        }
+      }
+    }
+  }
+} 

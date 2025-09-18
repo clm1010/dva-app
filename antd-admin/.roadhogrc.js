@@ -19,11 +19,16 @@ export default {
       "changeOrigin": true,
       "pathRewrite": { "^/api/v1/weather": "/v3/weather" }
     },
-    // "/api/v2": {
-    //   "target": "http://192.168.0.110",
-    //   "changeOrigin": true,
-    //   "pathRewrite": { "^/api/v2" : "/api/v2" }
-    // }
+    "/api/v2": {
+      "target": "http://192.168.0.110",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/v2" : "/api/v2" }
+    },
+    "/api/es": {
+      "target": "http://localhost:9200",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/es" : "" }
+    }
   },
   env: {
     development: {
@@ -53,5 +58,11 @@ export default {
   dllPlugin: {
     exclude: ["babel-runtime", "roadhog", "cross-env"],
     include: ["dva/router", "dva/saga", "dva/fetch"]
+  },
+  disableCSSModules: false,
+  hash: true,
+  ignoreMomentLocale: true,
+  define: {
+    'process.env.NODE_ENV': process.env.NODE_ENV || 'development'
   }
 }

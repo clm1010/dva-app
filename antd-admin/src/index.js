@@ -14,6 +14,7 @@ import { createBrowserHistory } from 'history'
 // 导入 ES6+ polyfill 支持
 import 'babel-polyfill'
 
+
 // 1. 初始化 dva 应用实例
 const app = dva({
   // 集成 loading 插件，可以自动管理异步加载状态

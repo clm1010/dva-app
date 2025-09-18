@@ -15,6 +15,26 @@ import {
 import styles from './sales.less'
 
 function Sales({ data }) {
+  // 如果没有数据，显示占位符
+  if (!data || data.length === 0) {
+    return (
+      <div className={styles.sales}>
+        <div className={styles.title}>Yearly Sales</div>
+        <div
+          style={{
+            height: 360,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#999'
+          }}
+        >
+          暂无数据
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.sales}>
       <div className={styles.title}>Yearly Sales</div>
@@ -120,6 +140,13 @@ function Sales({ data }) {
   )
 }
 
-Sales.propTypes = { data: PropTypes.array }
+Sales.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    Food: PropTypes.number,
+    Clothes: PropTypes.number,
+    Electronics: PropTypes.number
+  }))
+}
 
 export default Sales

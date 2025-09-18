@@ -93,6 +93,17 @@ const Menus = ({
       break
     }
   }
+
+  // 特殊处理 performHost 路径，让它选中"性能管理"菜单项
+  if (!currentMenu && location.pathname === '/performHost') {
+    currentMenu = menu.find(item => item.id === 8) // 8 是性能管理的 id
+  }
+
+  // 特殊处理 qps/chddetail 路径，让它选中"QPS监控"菜单项
+  if (!currentMenu && location.pathname === '/qps/chddetail') {
+    currentMenu = menu.find(item => item.id === 9) // 9 是QPS监控的 id
+  }
+
   const getPathArray = (array, current, pid, id) => {
     let result = [String(current[id])]
     const getPath = (item) => {
