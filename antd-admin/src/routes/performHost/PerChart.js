@@ -34,6 +34,7 @@ const PerChart = ({
   seriesData,
   loading,
   pagination,
+  ip_addr,
   rangeMoment
 }) => {
   console.log(
@@ -45,6 +46,7 @@ const PerChart = ({
       seriesData,
       loading,
       pagination,
+      ip_addr,
       rangeMoment
     },
     'props'
@@ -95,14 +97,14 @@ const PerChart = ({
   // 生成文件名
   const generateFileName = useCallback(() => {
     try {
-      const deviceName = chartObj.hostname || '性能图表'
+      const deviceName = chartObj.hostname || ip_addr || '性能图表'
       const timestamp = moment().format('YYYY-MM-DD_HH-mm-ss')
       return `性能曲线_${deviceName}_${timestamp}`
     } catch (error) {
       console.warn('生成文件名失败:', error)
-      return `性能曲线_${moment().valueOf()}`
+      return `性能曲线_${Date.now()}`
     }
-  }, [chartObj.hostname])
+  }, [chartObj.hostname, ip_addr])
 
   // 获取图表配置
   const getOption = useCallback(() => {
@@ -701,6 +703,7 @@ PerChart.propTypes = {
   seriesData: PropTypes.array,
   loading: PropTypes.bool,
   pagination: PropTypes.object,
+  ip_addr: PropTypes.string,
   rangeMoment: PropTypes.array
 }
 

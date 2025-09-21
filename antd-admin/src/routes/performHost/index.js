@@ -24,6 +24,7 @@ const DEFAULT_PERFORM_HOST_STATE = {
   rangeMoment: [],
   source: '',
   range: 900,
+  ip_addr: '',
   itemid: '',
   tableData: [],
   chartPagination: { current: 1, pageSize: 100, total: 0 },
@@ -45,6 +46,7 @@ const PerformHost = ({ dispatch, loading, performHost }) => {
     rangeMoment,
     source,
     range,
+    ip_addr,
     itemid,
     tableData,
     chartPagination,
@@ -77,6 +79,7 @@ const PerformHost = ({ dispatch, loading, performHost }) => {
     rangeMoment: _.isArray(rangeMoment) ? rangeMoment : [],
     source: source || '',
     range: _.isNumber(range) ? range : 900,
+    ip_addr: ip_addr || '',
     itemid: itemid || '',
     pagination: safeChartPagination // SearchZone使用图表分页
   }
@@ -99,6 +102,7 @@ const PerformHost = ({ dispatch, loading, performHost }) => {
     loading: isLoading,
     pagination: safeChartPagination,
     source: source || '',
+    ip_addr: ip_addr || '',
     itemid: itemid || '',
     FirstOccurrence: FirstOccurrence || '',
     range: _.isNumber(range) ? range : 900,
@@ -137,6 +141,7 @@ PerformHost.propTypes = {
     rangeMoment: PropTypes.array,
     source: PropTypes.string,
     range: PropTypes.number,
+    ip_addr: PropTypes.string,
     itemid: PropTypes.string,
     tableData: PropTypes.array,
     chartPagination: PropTypes.shape({

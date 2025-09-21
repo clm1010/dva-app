@@ -4,10 +4,8 @@ import _ from 'lodash'
 import queryString from 'query-string'
 import moment from 'moment'
 import { query } from '../services/performHost'
-import { getPerfHostIndexName } from '../utils/esIndexNameConfig'
-import { configureHostPerfCurveDSLTemplate } from '../utils/dslQueryCfg'
 import { peformanceCfg } from '../utils/performanceOelCfg'
-import { safeParseInt } from '../utils/FunctionTool'
+import { getPerfHostIndexName } from '../utils/esIndexNameConfig'
 
 moment.locale('zh-cn')
 
@@ -47,6 +45,10 @@ const validateQueryParams = (payload) => {
     errors.push('没有传告警发生时间，无法进行查询')
   }
 
+  if (!_.get(payload, 'ip_addr')) {
+    errors.push('没有传ip地址，无法进行查询')
+  }
+
   if (!_.get(payload, 'itemid')) {
     errors.push('没有传itemid，无法进行查询')
   }
@@ -75,6 +77,91 @@ const processTimestamp = (timestamp) => {
   } catch (error) {
     console.warn('时间戳处理错误:', error, timestamp)
     return null
+  }
+}
+
+// 安全的整数解析
+const safeParseInt = (value, defaultValue = 0) => {
+  if (_.isNumber(value)) return Math.floor(value)
+  if (_.isString(value)) {
+    const parsed = parseInt(value, 10)
+    return _.isNaN(parsed) ? defaultValue : parsed
+  }
+  return defaultValue
+}
+
+// 构建DSL查询 - 增强安全性
+const buildDSLQuery = (payload, pagination, sorter) => {
+  try {
+    // 安全克隆配置
+    if (!_.get(peformanceCfg, 'queryHostPerformance')) {
+      throw new Error('缺少查询配置模板')
+    }
+
+    const dslTemplate = _.cloneDeep(peformanceCfg.queryHostPerformance)
+
+    // 确保必要的结构存在
+    if (!_.get(dslTemplate, 'query.bool.must')) {
+      _.set(dslTemplate, 'query.bool.must', [])
+    }
+
+    dslTemplate.sort = []
+
+    // 添加查询条件 - 安全提取
+    const startTime = _.get(payload, 'startTime')
+    const endTime = _.get(payload, 'endTime')
+    const source = _.get(payload, 'source', '')
+    const ip_addr = _.get(payload, 'ip_addr', '')
+    const itemid = _.get(payload, 'itemid', '')
+
+    // 时间范围查询条件
+    if (process.env.NODE_ENV === 'production') {
+      if (_.isNumber(startTime) && _.isNumber(endTime)) {
+        dslTemplate.query.bool.must.push({
+          range: { clock: { gte: startTime * 1000, lte: endTime * 1000 } }
+        })
+      }
+    } else {
+      // 开发环境使用固定时间范围
+      dslTemplate.query.bool.must.push({
+        range: { clock: { gte: 1733904097000, lte: 1747648800000 } }
+      })
+    }
+
+    // 其他查询条件 - 确保值存在
+    if (source) {
+      dslTemplate.query.bool.must.push({ term: { source } })
+    }
+    if (ip_addr) {
+      dslTemplate.query.bool.must.push({ term: { ip_addr } })
+    }
+    if (itemid) {
+      dslTemplate.query.bool.must.push({ term: { itemid } })
+    }
+
+    // 安全的排序条件处理
+    const safeField = _.get(sorter, 'field')
+    const safeOrder = _.get(sorter, 'order')
+
+    if (safeField && safeOrder) {
+      dslTemplate.sort.push({
+        [safeField]: { order: safeOrder }
+      })
+    } else {
+      dslTemplate.sort.push({ clock_time: { order: 'asc' } })
+    }
+
+    // 安全的分页参数处理
+    const currentPage = safeParseInt(_.get(payload, 'current'), 1) || safeParseInt(_.get(pagination, 'current'), 1)
+    const pageSize = safeParseInt(_.get(pagination, 'pageSize'), 10)
+
+    dslTemplate.from = Math.max(0, (currentPage - 1) * pageSize)
+    dslTemplate.size = Math.max(1, pageSize)
+
+    return dslTemplate
+  } catch (error) {
+    console.error('构建DSL查询失败:', error)
+    throw new Error(`查询构建失败: ${error.message}`)
   }
 }
 
@@ -107,6 +194,7 @@ const processQueryResult = (data, payload, pagination, rangeMoment) => {
       rangeMoment: _.isArray(rangeMoment) ? rangeMoment : [],
       source: _.get(payload, 'source', ''),
       range: _.get(payload, 'range', 900),
+      ip_addr: _.get(payload, 'ip_addr', ''),
       itemid: _.get(payload, 'itemid', ''),
       FirstOccurrence: _.get(payload, 'FirstOccurrence', ''),
       current: safeParseInt(_.get(payload, 'current'), 1) || safeParseInt(_.get(pagination, 'current'), 1)
@@ -165,8 +253,8 @@ export default {
     source: '',
     range: 900,
     itemid: '',
+    ip_addr: '',
     rangeMoment: [],
-    useDirectTimeRange: false, // 标记是否使用RangePicker直接选择的时间范围
     // echarts 图形数据
     xAxisData: [],
     yAxisData: '',
@@ -209,52 +297,17 @@ export default {
           return
         }
 
-        let startTime
-        let endTime
-        let range
-        let rangeMoment = []
+        // 计算时间范围 - 类型安全
+        const range = safeParseInt(_.get(payload, 'range'), 900)
+        const timestampNum = safeParseInt(processedTimestamp)
 
-        // 检查是否使用直接时间范围（从RangePicker选择）
-        if (_.get(payload, 'useDirectTimeRange')) {
-          // 直接使用用户选择的时间范围，确保精度一致
-          startTime = _.get(payload, 'startTime')
-          endTime = _.get(payload, 'endTime')
-          range = Math.round((endTime - startTime) / 2) // 计算range用于查询
-
-          // 直接使用原始选择的moment对象，确保时间精度完全一致
-          const selectedRangeMoment = _.get(payload, 'selectedRangeMoment')
-          if (_.isArray(selectedRangeMoment) && selectedRangeMoment.length === 2) {
-            rangeMoment = selectedRangeMoment
-          } else {
-            // 备用方案：从时间戳创建moment对象
-            try {
-              rangeMoment = [moment(startTime * 1000), moment(endTime * 1000)]
-            } catch (momentError) {
-              console.warn('创建moment对象失败:', momentError)
-              rangeMoment = []
-            }
-          }
-        } else {
-          // 传统方式：基于中心时间和范围计算（Select选择或初始加载）
-          range = safeParseInt(_.get(payload, 'range'), 900)
-          const timestampNum = safeParseInt(processedTimestamp)
-
-          if (timestampNum <= 0) {
-            message.error('无效的时间戳')
-            return
-          }
-
-          startTime = timestampNum - range
-          endTime = timestampNum + range
-
-          // 生成基于告警时间的时间范围显示数据 - 安全处理
-          try {
-            rangeMoment = [moment(startTime * 1000), moment(endTime * 1000)]
-          } catch (momentError) {
-            console.warn('创建moment对象失败:', momentError)
-            rangeMoment = []
-          }
+        if (timestampNum <= 0) {
+          message.error('无效的时间戳')
+          return
         }
+
+        const startTime = timestampNum - range
+        const endTime = timestampNum + range
 
         const processedPayload = {
           ...payload,
@@ -264,38 +317,30 @@ export default {
           range
         }
 
+        // 生成时间范围显示数据 - 安全处理
+        let rangeMoment = []
+        try {
+          rangeMoment = [moment(startTime * 1000), moment(endTime * 1000)]
+        } catch (momentError) {
+          console.warn('创建moment对象失败:', momentError)
+          rangeMoment = []
+        }
+
         // 更新基本状态
-        const updatePayload = {
-          rangeMoment, // 保持rangeMoment的值，如果有updateRangeMoment标志则使用新的
-          source: _.get(payload, 'source', ''),
-          range,
-          itemid: _.get(payload, 'itemid', ''),
-          useDirectTimeRange: _.get(payload, 'useDirectTimeRange', false) // 保存时间范围模式
-        }
-
-        // 如果需要更新RangePicker的显示（从Select选择时）
-        if (_.get(payload, 'updateRangeMoment')) {
-          const newRangeMoment = _.get(payload, 'selectedRangeMoment')
-          if (_.isArray(newRangeMoment) && newRangeMoment.length === 2) {
-            updatePayload.rangeMoment = newRangeMoment
-          }
-        }
-
-        // 只有在非直接时间范围模式下才更新FirstOccurrence（保持告警时间固定）
-        if (!_.get(payload, 'useDirectTimeRange')) {
-          updatePayload.FirstOccurrence = processedTimestamp
-        } else {
-          // 在直接时间范围模式下，保持原始的FirstOccurrence
-          updatePayload.FirstOccurrence = _.get(currentState, 'FirstOccurrence', processedTimestamp)
-        }
-
         yield put({
           type: 'updateBasicState',
-          payload: updatePayload
+          payload: {
+            rangeMoment,
+            FirstOccurrence: processedTimestamp,
+            source: _.get(payload, 'source', ''),
+            range,
+            ip_addr: _.get(payload, 'ip_addr', ''),
+            itemid: _.get(payload, 'itemid', '')
+          }
         })
 
         // 构建查询参数
-        const dslTemplate = configureHostPerfCurveDSLTemplate(peformanceCfg.queryHostPerformance, processedPayload, pagination, sorter)
+        const dslTemplate = buildDSLQuery(processedPayload, pagination, sorter)
 
         // 安全获取查询路径
         let queryPath
@@ -359,20 +404,11 @@ export default {
         // 重新执行查询 - 安全提取参数
         const queryPayload = {
           source: _.get(currentState, 'source', ''),
+          ip_addr: _.get(currentState, 'ip_addr', ''),
           itemid: _.get(currentState, 'itemid', ''),
           FirstOccurrence: _.get(currentState, 'FirstOccurrence', ''),
           range: _.get(currentState, 'range', 900),
           current: currentPage
-        }
-
-        // 如果有rangeMoment并且正在使用直接时间范围（RangePicker选择），需要保持这个模式
-        const rangeMoment = _.get(currentState, 'rangeMoment', [])
-        if (_.isArray(rangeMoment) && rangeMoment.length === 2 && _.get(currentState, 'useDirectTimeRange')) {
-          // 保持RangePicker选择的时间范围
-          queryPayload.useDirectTimeRange = true
-          queryPayload.startTime = moment(rangeMoment[0]).unix()
-          queryPayload.endTime = moment(rangeMoment[1]).unix()
-          queryPayload.selectedRangeMoment = rangeMoment
         }
 
         yield put({
@@ -425,6 +461,7 @@ export default {
         // 重新执行查询 - 安全提取参数
         const queryPayload = {
           source: _.get(currentState, 'source', ''),
+          ip_addr: _.get(currentState, 'ip_addr', ''),
           itemid: _.get(currentState, 'itemid', ''),
           FirstOccurrence: _.get(currentState, 'FirstOccurrence', ''),
           range: _.get(currentState, 'range', 900),
@@ -447,7 +484,7 @@ export default {
       return {
         ...state,
         ..._.pick(payload, [
-          'rangeMoment', 'FirstOccurrence', 'source', 'range', 'itemid', 'useDirectTimeRange'
+          'rangeMoment', 'FirstOccurrence', 'source', 'range', 'ip_addr', 'itemid'
         ])
       }
     },
@@ -461,7 +498,7 @@ export default {
         loading: false,
         ..._.pick(payload, [
           'xAxisData', 'yAxisData', 'chartObj', 'seriesData', 'showChartOrTable',
-          'tableData', 'total', 'current', 'rangeMoment'
+          'tableData', 'total', 'current'
         ]),
         [paginationKey]: {
           ...state[paginationKey],
@@ -526,6 +563,7 @@ export default {
 
             // 只在有有效参数时才触发查询
             if (_.get(queryParams, 'FirstOccurrence') &&
+                _.get(queryParams, 'ip_addr') &&
                 _.get(queryParams, 'itemid')) {
               dispatch({
                 type: 'query',
