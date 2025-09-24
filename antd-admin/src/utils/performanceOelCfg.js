@@ -47,7 +47,7 @@ export const peformanceCfg = {
                 }
               ],
               _source: {
-                include: []
+                includes: []
               },
               size: 1
             }
@@ -69,7 +69,7 @@ export const peformanceCfg = {
                     }
                   ],
                   _source: {
-                    include: []
+                    includes: []
                   },
                   size: 100
                 }
@@ -112,7 +112,7 @@ export const peformanceCfg = {
   //                 }
   //               ],
   //               _source: {
-  //                 include: []
+  //                 includes: []
   //               },
   //               size: 1
   //             }
@@ -138,7 +138,7 @@ export const peformanceCfg = {
   //                     }
   //                   ],
   //                   _source: {
-  //                     include: []
+  //                     includes: []
   //                   },
   //                   size: 0
   //                 }
@@ -197,7 +197,7 @@ export const peformanceCfg = {
                 }
               ],
               _source: {
-                include: []
+                includes: []
               },
               size: 1
             }
@@ -221,7 +221,7 @@ export const peformanceCfg = {
                     }
                   ],
                   _source: {
-                    include: []
+                    includes: []
                   },
                   size: 100
                 }
@@ -285,7 +285,7 @@ export const peformanceCfg = {
                 }
               ],
               _source: {
-                include: []
+                includes: []
               },
               size: 1
             }
@@ -300,7 +300,7 @@ export const peformanceCfg = {
                 }
               ],
               _source: {
-                include: []
+                includes: []
               },
               size: 100
             }
@@ -351,7 +351,7 @@ export const peformanceCfg = {
     from: 0,
     size: 100,
     _source: {
-      include: [
+      includes: [
         'clock',
         'value',
         'hostip',

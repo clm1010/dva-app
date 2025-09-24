@@ -53,6 +53,26 @@ const SearchZone = ({
           }
           // 过去的小时，所有分钟都可以选择
           return []
+        },
+        disabledSeconds: (selectedHour, selectedMinute) => {
+          // 如果选择的是未来的小时或分钟，禁用所有秒
+          if (selectedHour > now.hour() || (selectedHour === now.hour() && selectedMinute > now.minute())) {
+            const seconds = []
+            for (let i = 0; i < 60; i++) {
+              seconds.push(i)
+            }
+            return seconds
+          }
+          // 如果选择的是当前小时和分钟，禁用未来的秒
+          if (selectedHour === now.hour() && selectedMinute === now.minute()) {
+            const seconds = []
+            for (let i = now.second() + 1; i < 60; i++) {
+              seconds.push(i)
+            }
+            return seconds
+          }
+          // 过去的时间，所有秒都可以选择
+          return []
         }
       }
     }
@@ -68,12 +88,13 @@ const SearchZone = ({
 
   const handleDateChange = (dates) => {
     if (dates && dates.length === 2) {
+      // 保持精确到秒，不进行时间截断
       const adjustedDates = [
-        dates[0] ? dates[0].startOf('minute') : null,
-        dates[1] ? dates[1].startOf('minute') : null
+        dates[0] || null,
+        dates[1] || null
       ]
 
-      // 在调整时间后进行验证，确保与 handleSearch 中的逻辑一致
+      // 进行验证，确保与 handleSearch 中的逻辑一致
       if (adjustedDates[0] && adjustedDates[1]) {
         if (adjustedDates[0].isAfter(adjustedDates[1])) {
           message.warning('开始时间不能晚于结束时间')
@@ -113,29 +134,43 @@ const SearchZone = ({
 
     const start = selectedDateRange[0]
     const end = selectedDateRange[1]
-    const diffMinutes = end.diff(start, 'minutes')
+    const diffSeconds = end.diff(start, 'seconds')
+    const diffMinutes = Math.floor(diffSeconds / 60)
     const diffHours = Math.floor(diffMinutes / 60)
     const diffDays = Math.floor(diffHours / 24)
+    const remainingSeconds = diffSeconds % 60
     const remainingMinutes = diffMinutes % 60
 
     if (diffDays === 0) {
       if (diffHours === 0) {
-        return `查询范围: ${diffMinutes}分钟`
+        if (diffMinutes === 0) {
+          return `查询范围: ${diffSeconds}秒`
+        }
+        if (remainingSeconds === 0) {
+          return `查询范围: ${diffMinutes}分钟`
+        }
+        return `查询范围: ${diffMinutes}分钟${remainingSeconds}秒`
       }
-      if (remainingMinutes === 0) {
+      if (remainingMinutes === 0 && remainingSeconds === 0) {
         return `查询范围: ${diffHours}小时`
       }
-      return `查询范围: ${diffHours}小时${remainingMinutes}分钟`
+      if (remainingSeconds === 0) {
+        return `查询范围: ${diffHours}小时${remainingMinutes}分钟`
+      }
+      return `查询范围: ${diffHours}小时${remainingMinutes}分钟${remainingSeconds}秒`
     }
 
     const remainingHours = diffHours % 24
-    if (remainingHours === 0 && remainingMinutes === 0) {
+    if (remainingHours === 0 && remainingMinutes === 0 && remainingSeconds === 0) {
       return `查询范围: ${diffDays}天`
     }
-    if (remainingMinutes === 0) {
+    if (remainingMinutes === 0 && remainingSeconds === 0) {
       return `查询范围: ${diffDays}天${remainingHours}小时`
     }
-    return `查询范围: ${diffDays}天${remainingHours}小时${remainingMinutes}分钟`
+    if (remainingSeconds === 0) {
+      return `查询范围: ${diffDays}天${remainingHours}小时${remainingMinutes}分钟`
+    }
+    return `查询范围: ${diffDays}天${remainingHours}小时${remainingMinutes}分钟${remainingSeconds}秒`
   }
 
   return (
@@ -144,14 +179,14 @@ const SearchZone = ({
         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
           <RangePicker
             showTime={{
-              format: 'HH:mm',
+              format: 'HH:mm:ss',
               hideDisabledOptions: true,
               minuteStep: 1,
-              secondStep: 60
+              secondStep: 1
             }}
             placeholder={['开始时间', '结束时间']}
             onChange={handleDateChange}
-            format='YYYY-MM-DD HH:mm'
+            format='YYYY-MM-DD HH:mm:ss'
             value={selectedDateRange}
             disabledDate={disabledDate}
             disabledTime={disabledTime}
@@ -200,8 +235,8 @@ const SearchZone = ({
           {selectedDateRange && selectedDateRange[0] && selectedDateRange[1] && (
             <div>
               <span>
-                已选择: {selectedDateRange[0].format('YYYY-MM-DD HH:mm')} 至{' '}
-                {selectedDateRange[1].format('YYYY-MM-DD HH:mm')}
+                已选择: {selectedDateRange[0].format('YYYY-MM-DD HH:mm:ss')} 至{' '}
+                {selectedDateRange[1].format('YYYY-MM-DD HH:mm:ss')}
               </span>
               <span>{getTimeRangeDescription()}</span>
             </div>

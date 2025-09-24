@@ -3,7 +3,8 @@
 // 模拟字典配置
 const dictConfig = {
   performanceCurve: {
-    ntZabbixPerformance: 'nt_zabbix_performance'
+    // ntZabbixPerformance: 'nt_zabbix_performance',
+    u2performance: 'u2performance'
   }
 };
 

@@ -54,7 +54,7 @@ export const configureQpsDSLTemplate = (dslTemplate, startTime, endTime) => {
     // 配置最新信息聚合
     const latestInfoPath = 'aggs.group_by_device.aggs.latest_info.top_hits._source'
     if (_.has(template, latestInfoPath)) {
-      _.set(template, `${latestInfoPath}.include`, sourceFields)
+      _.set(template, `${latestInfoPath}.includes`, sourceFields)
     }
 
     // 配置hostip值聚合
@@ -66,7 +66,7 @@ export const configureQpsDSLTemplate = (dslTemplate, startTime, endTime) => {
     // 配置所有值聚合
     const allValuesPath = 'aggs.group_by_device.aggs.hostip_values.aggs.all_values.top_hits'
     if (_.has(template, `${allValuesPath}._source`)) {
-      _.set(template, `${allValuesPath}._source.include`, sourceFields)
+      _.set(template, `${allValuesPath}._source.includes`, sourceFields)
       _.set(template, `${allValuesPath}.size`, 100)
     }
 
@@ -136,10 +136,10 @@ export const configureRoleDetailDSLTemplate = (
       'aggs.group_by_hostip.aggs.time_series.top_hits._source'
 
     if (_.has(template, latestInfoPath)) {
-      _.set(template, `${latestInfoPath}.include`, sourceFields)
+      _.set(template, `${latestInfoPath}.includes`, sourceFields)
     }
     if (_.has(template, timeSeriesPath)) {
-      _.set(template, `${timeSeriesPath}.include`, sourceFields)
+      _.set(template, `${timeSeriesPath}.includes`, sourceFields)
     }
   } catch (aggError) {
     console.warn('配置DSL模板聚合字段时出错:', aggError)

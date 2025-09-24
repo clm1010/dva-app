@@ -23,15 +23,16 @@ export const getPerfHostIndexName = (payload) => {
  * @returns {string} 索引名称
  */
 export const getPerfQpsIndexName = (payload) => {
-  if (process.env.NODE_ENV === 'production') {
-    return ESFindIndex(
-      payload.startTime * 1000,
-      payload.endTime * 1000,
-      getDictValue('performanceCurve', 'u2performance'),
-      'u2performance-',
-      'day',
-      ''
-    )
-  }
-  return '/u2performance_for_test/_search/'
+  // if (process.env.NODE_ENV === 'production') {
+  return ESFindIndex(
+    payload.startTime * 1000,
+    payload.endTime * 1000,
+    // getDictValue('performanceCurve', 'u2performance'),
+    // getDictValue('performanceCurve', 'u2performance'),
+    'u2performance-',
+    'day',
+    ''
+  )
+  // }
+  // return '/u2performance_for_test/_search/'
 }

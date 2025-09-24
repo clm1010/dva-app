@@ -30,7 +30,7 @@ const QpsPage = ({ dispatch, qpsData, loading }) => {
         console.warn('恢复时间范围失败:', error)
       }
     }
-    return [moment().startOf('day'), moment().startOf('minute')]
+    return [moment().startOf('day'), moment()]
   })
 
   // 从详情页返回时恢复状态
@@ -79,8 +79,8 @@ const QpsPage = ({ dispatch, qpsData, loading }) => {
     (dates) => {
       if (dates && dates.length === 2) {
         const adjustedDates = [
-          (dates[0] && dates[0].startOf('minute')) || null,
-          (dates[1] && dates[1].startOf('minute')) || null
+          dates[0] || null,
+          dates[1] || null
         ]
         setSelectedDateRange(adjustedDates)
 
@@ -132,7 +132,7 @@ const QpsPage = ({ dispatch, qpsData, loading }) => {
   }, [selectedDateRange, dispatch])
 
   const handleReset = useCallback(() => {
-    const resetRange = [moment().startOf('day'), moment().startOf('minute')]
+    const resetRange = [moment().startOf('day'), moment()]
     setSelectedDateRange(resetRange)
 
     dispatch({
